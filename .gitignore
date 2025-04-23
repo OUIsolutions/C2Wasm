@@ -1,7 +1,7 @@
 
 release
 
-
+build_test.sh
 # Prerequisites
 *.d
 teste.html
