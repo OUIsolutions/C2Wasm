@@ -3,10 +3,10 @@
 function create_js_part()
     local js_content = [[
 let c2wasm = function(){
-    let internal_functions = {}
+    let envcallbacks = {}
     let cfunctions = {}
     let main_obj = {
-        internal_functions: internal_functions,
+        envcallbacks: envcallbacks,
         cfunctions: cfunctions
     } 
 
