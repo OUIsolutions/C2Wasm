@@ -1,3 +1,7 @@
+
+
+extern void c2wasm_set_int_prop(int index,long  prop, int value);
+
 int c2wasm_get_string_length(const char *str) {
     int length = 0;
     while (str[length] != '\0') {
