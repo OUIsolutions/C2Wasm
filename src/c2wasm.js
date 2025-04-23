@@ -1,7 +1,7 @@
 let c2wasm = function(){
 
     let main_module = {}
-    main_module.createEnv = function(stack,lib) {
+    main_module.createEnv = function(stack) {
 
         let env_obj = {}
         
@@ -11,10 +11,14 @@ let c2wasm = function(){
     main_module.loadBytes = async function(wasmBytes, callback) {
 
         let created_obj = {};
+
+        
         created_obj.lib = {};
-        created_obj.stack = [];
-        created_obj.env =  main_module.createEnv(created_obj.stack,created_obj.lib);
-        created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.env);
+        created_obj.stack = [created_obj.lib];
+        created_obj.importObject = {
+            env:main_module.createEnv(created_obj.stack)
+        };
+        created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.importObject);
         return created_obj;
     }
     main_module.loadModule = async function(module, callback) {
