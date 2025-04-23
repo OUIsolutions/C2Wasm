@@ -2,9 +2,9 @@ let c2wasm = function(){
 
     let extract_str = function(cfuncs,str){
         let buffer = [];
-        let size = cfuncs.c2wasm_get_string_size(str);
+        let size = cfuncs.cfuncs.c2wasm_get_string_size(str);
         for (let i = 0; i < size; i++) {
-            let char = cfuncs.c2wasm_get_char_from_string(str,i);
+            let char = cfuncs.cfuncs.c2wasm_get_char_from_string(str,i);
             buffer.push(char);
         }
         let result = String.fromCharCode.apply(null, buffer);
@@ -34,7 +34,10 @@ let c2wasm = function(){
         
         created_obj.stack = [created_obj.lib];
         created_obj.importObject = {
-            env:main_module.createEnv(created_obj.stack,cfuncs)
+            env: {
+                ...main_module.createEnv(created_obj.stack, cfuncs),
+                memory: new WebAssembly.Memory({ initial: 256, maximum: 512 })
+            },
         };
         created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.importObject);
         cfuncs.cfuncs = created_obj.wasmModule.instance.exports;
@@ -43,7 +46,7 @@ let c2wasm = function(){
     }
     main_module.loadModule = async function(module, callback) {
         let wasmBytes = await fetch(module).then(res => res.arrayBuffer());
-        return main_module.loadBytes(wasmBytes, callback);
+        return await main_module.loadBytes(wasmBytes, callback);
     }
     return main_module;
 
