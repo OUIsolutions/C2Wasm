@@ -15,8 +15,11 @@ let c2wasm = function(){
     let main_module = {}
     main_module.createEnv = function(stack,cfuncs) {
         let env_obj = {}
-        env_obj.setIntprop = function(stack_index,name, value) {
-
+        env_obj.setIntprop = function(stack_index,name_cstr, value) {
+           let name = extract_str(cfuncs,name_cstr);
+           console.log("setIntprop",name,value);
+           let obj = stack[stack_index];
+           obj[name] = value;
         }
 
         return env_obj;
