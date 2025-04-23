@@ -1,6 +1,7 @@
 
 release
 teste.c
+teste.wasm
 build_test.sh
 # Prerequisites
 *.d
