@@ -30,6 +30,8 @@ let c2wasm = function(){
         let cfuncs = {};
 
         created_obj.lib = {};
+
+        
         created_obj.stack = [created_obj.lib];
         created_obj.importObject = {
             env:main_module.createEnv(created_obj.stack,cfuncs)
