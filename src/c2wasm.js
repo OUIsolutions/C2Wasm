@@ -1,9 +1,23 @@
 let c2wasm = function(){
 
+    let extract_str = function(cfuncs,str){
+        let buffer = [];
+        let size = cfuncs.c2wasm_get_string_size(str);
+        for (let i = 0; i < size; i++) {
+            let char = cfuncs.c2wasm_get_char_from_string(str,i);
+            buffer.push(char);
+        }
+        let result = String.fromCharCode.apply(null, buffer);
+        return result;
+    }
+
+
     let main_module = {}
     main_module.createEnv = function(stack,cfuncs) {
         let env_obj = {}
-        
+        env_obj.setIntprop = function(stack_index,name, value) {
+
+        }
 
         return env_obj;
     } 
