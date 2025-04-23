@@ -3,7 +3,12 @@
 function create_js_part()
     local js_content = [[
 let c2wasm = function(){
-    let main_obj = {} 
+    let internal_functions = {}
+    let cfunctions = {}
+    let main_obj = {
+        internal_functions: internal_functions,
+        cfunctions: cfunctions
+    } 
 
 ]]
     local files = darwin.dtw.list_files_recursively("srcjs",true)
