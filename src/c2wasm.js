@@ -15,6 +15,7 @@ let c2wasm = function(){
     let main_module = {}
     main_module.createEnv = function(stack,cfuncs) {
         let env_obj = {}
+        
         env_obj.setIntProp = function(stack_index,name_cstr, value) {
            let name = extract_str(cfuncs,name_cstr);
            console.log("setIntprop",name,value);
@@ -34,9 +35,11 @@ let c2wasm = function(){
         
         created_obj.stack = [created_obj.lib];
         created_obj.importObject = {
+            module: {},
+
             env: {
-                ...main_module.createEnv(created_obj.stack, cfuncs),
-                memory: new WebAssembly.Memory({ initial: 256, maximum: 512 })
+                memory: new WebAssembly.Memory({ initial: 256 }),
+                table: new WebAssembly.Table({ initial: 0, element: 'anyfunc' })
             },
         };
         created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.importObject);
