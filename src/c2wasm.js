@@ -39,8 +39,15 @@ let c2wasm = function(){
 
             env: {
                 memory: new WebAssembly.Memory({ initial: 256 }),
-                table: new WebAssembly.Table({ initial: 0, element: 'anyfunc' })
-            },
+                strlen: function(ptr) {
+                    // Função strlen simulada: percorre a memória até achar 0 (fim de string)
+                    const buffer = new Uint8Array(memory.buffer);
+                    let len = 0;
+                    while (buffer[ptr + len] !== 0) {
+                        len++;
+                    }
+                    return len;
+                },            },
         };
         created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.importObject);
         cfuncs.cfuncs = created_obj.wasmModule.instance.exports;
