@@ -37,11 +37,12 @@ let c2wasm = function(){
         created_obj.importObject = {
             module: {},
 
-            env: main_module.createEnv(created_obj.stack,cfuncs),
+            env:{},
         };
         created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.importObject);
         cfuncs.cfuncs = created_obj.wasmModule.instance.exports;
-        cfuncs.cfuncs[startCCallback](0);
+        r = cfuncs.cfuncs[startCCallback]();
+        console.log("startCCallback",r);
         return created_obj;
     }
     main_module.loadModule = async function(module, callback) {
