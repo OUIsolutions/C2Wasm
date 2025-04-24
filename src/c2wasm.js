@@ -15,7 +15,7 @@ let c2wasm = function() {
 
     main_module.createEnv = function(stack, cfuncs, memory) {
         let env_obj = {};
-        env_obj.memory =    new WebAssembly.Memory({ initial: 256 });
+        env_obj.memory =    new WebAssembly.Memory({ initial: 2000, maximum: 6000  });
 
 
         env_obj.strlen = function(str) {
