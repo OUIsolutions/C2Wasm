@@ -35,6 +35,7 @@ let c2wasm = function() {
         };
         env_obj.__memory_base = 0;
         env_obj.__table_base = 0;
+        env_obj.__stack_pointer = new WebAssembly.Global({ value: "i32", mutable: true }, 0);
         env_obj.table = new WebAssembly.Table({ initial: 0, element: 'anyfunc' });
         return env_obj;
     };
