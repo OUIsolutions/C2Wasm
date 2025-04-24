@@ -15,7 +15,8 @@ let c2wasm = function() {
 
     main_module.createEnv = function(stack, cfuncs, memory) {
         let env_obj = {};
-        env_obj.memory = memory;
+        env_obj.memory =    new WebAssembly.Memory({ initial: 256 });
+
 
         env_obj.strlen = function(str) {
             let size = 0;
@@ -27,9 +28,8 @@ let c2wasm = function() {
 
         env_obj.c2wasm_set_int_prop = function(stack_index, name_cstr, value) {
             console.log("setIntprop", stack_index, name_cstr, value);
-
-            let name = extract_str(cfuncs, name_cstr);
             return;
+            let name = extract_str(cfuncs, name_cstr);
             let obj = stack[stack_index];
             obj[name] = value;
         };
@@ -46,16 +46,13 @@ let c2wasm = function() {
         created_obj.lib = {};
         created_obj.stack = [created_obj.lib];
 
-        let memory = new WebAssembly.Memory({ initial: 256 });
         
         created_obj.importObject = {
             module: {},
-            env: main_module.createEnv(created_obj.stack, cfuncs, memory)
+            env: main_module.createEnv(created_obj.stack, cfuncs)
         };
 
-        // `memory` pode estar fora do `env` dependendo do wasm, mas aqui estamos centralizando.
-        created_obj.importObject.env.memory = memory;
-
+     
         created_obj.wasmModule = await WebAssembly.instantiate(wasmBytes, created_obj.importObject);
         cfuncs.cfuncs = created_obj.wasmModule.instance.exports;
         cfuncs.cfuncs[startCCallback]();
