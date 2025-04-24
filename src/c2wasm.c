@@ -1,6 +1,6 @@
 
 
-extern void c2wasm_set_int_prop(int index,const char*  prop, int value);
+extern void c2wasm_set_int_prop(int index,const char [], int value);
 
 int c2wasm_get_string_size(const char *str) {
     int length = 0;
