@@ -3,6 +3,7 @@ release
 teste.c
 teste.wasm
 build_test.sh
+*.wasm
 # Prerequisites
 *.d
 teste.html
