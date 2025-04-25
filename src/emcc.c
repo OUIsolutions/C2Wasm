@@ -1,5 +1,5 @@
 #include  "emcc_exports.h"
-#include "var.h"
+#include "c2WasmVar.h"
 
 
 C2wasmVar c2wasm_window = {0, 0};
