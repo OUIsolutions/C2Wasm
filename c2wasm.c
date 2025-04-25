@@ -1,4 +1,5 @@
-
+#ifndef __c2wasm_c__
+#define __c2wasm_c__
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -83,3 +84,5 @@ EM_JS(void ,c2wasm_set_string_prop,(C2wasmVar *js_var,const char *prop_name, con
     let value_formatted = c2wasm_get_string(value);
     object[prop_name_formatted] = value_formatted;
 });
+
+#endif // __c2wasm_c__
