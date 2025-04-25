@@ -84,5 +84,25 @@ EM_JS(void ,c2wasm_set_string_prop,(C2wasmVar *js_var,const char *prop_name, con
     let value_formatted = c2wasm_get_string(value);
     object[prop_name_formatted] = value_formatted;
 });
+EM_JS(void ,c2wasm_set_bool_prop,(C2wasmVar *js_var,const char *prop_name, int value), {
+    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
+    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
+    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+    let prop_name_formatted = c2wasm_get_string(prop_name);
+    object[prop_name_formatted] = value;
+});
+
+
+
+EM_JS(void ,c2wasm_set_function_prop,(C2wasmVar *js_var,const char *prop_name, C2wasmVar (*callback)(int stack_index) ){
+
+    window['c2wasm_stack'].push([]);
+    let index = window['c2wasm_stack'].length;
+    //dostuf
+    console.log("callback",callback);
+
+    window['c2wasm_stack'].pop();
+
+});
 
 #endif // __c2wasm_c__
