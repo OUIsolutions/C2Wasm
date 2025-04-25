@@ -5,6 +5,11 @@
 C2wasmVar c2wasm_window = {0, 0};
 
 
+char c2wasm_get_char(const char *str,int index) {
+    return str[index];
+}
+
+
 
 EM_JS(void ,c2wasm_start, (void), {
  
