@@ -6,7 +6,7 @@ C2wasmVar c2wasm_window = {0, 0};
 
 
 
-EM_JS(void ,c2wasm_start_stack, (void), {
+EM_JS(void ,c2wasm_start, (void), {
  
    if(window['c2wasm_stack'] == undefined){
       window['c2wasm_stack'] = [[window]];
