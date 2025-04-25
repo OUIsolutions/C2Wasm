@@ -1,5 +1,31 @@
-#include  "emcc_exports.h"
-#include "c2WasmVar.h"
+
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
+#ifndef EMSCRIPTEN_KEEPALIVE
+#define EMSCRIPTEN_KEEPALIVE
+#endif
+
+#ifndef EM_JS
+#define EM_JS(ret, name, params, body) ret name params;
+#endif
+
+
+
+typedef struct C2wasmVar {
+  long  stack_index;
+  long internal_stack_index;
+} C2wasmVar;
+
+
+EMSCRIPTEN_KEEPALIVE long  C2wasmVar_get_stack_index(C2wasmVar *js_var) {
+  return js_var->stack_index;
+}
+EMSCRIPTEN_KEEPALIVE long  C2wasmVar_get_internal_stack_index(C2wasmVar *js_var) {
+  return js_var->internal_stack_index;
+}
 
 
 C2wasmVar c2wasm_window = {0, 0};
