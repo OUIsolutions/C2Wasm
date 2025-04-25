@@ -1,6 +1,8 @@
 
 release
 teste.c
+
+a.out.js
 teste.wasm
 build_test.sh
 *.wasm

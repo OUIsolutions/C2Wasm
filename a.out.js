@@ -1351,7 +1351,7 @@ unexportedSymbols.forEach(unexportedRuntimeSymbol);
 function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
-function chamar_alerta(msg) { alert(UTF8ToString(msg)); }
+function chamar_alerta(msg) { alert(msg); }
 var wasmImports = {
   /** @export */
   chamar_alerta,
