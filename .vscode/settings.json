@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "typeinfo": "c",
-        "stdio.h": "c",
-        "emcc_exports.h": "c",
-        "wasm_var.h": "c",
-        "type_traits": "c"
-    }
-}

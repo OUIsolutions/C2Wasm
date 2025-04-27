@@ -94,11 +94,14 @@ EM_JS(void ,c2wasm_set_bool_prop,(C2wasmVar *js_var,const char *prop_name, int v
 
 
 
-EM_JS(void ,c2wasm_set_function_prop,(C2wasmVar *js_var,const char *prop_name, C2wasmVar (*callback)(int stack_index) ){
+EM_JS(void ,c2wasm_set_function_prop,(C2wasmVar *js_var,const char *prop_name, void *callback),{
 
     window['c2wasm_stack'].push([]);
     let index = window['c2wasm_stack'].length;
     //dostuf
+
+    let prop_name_formatted = c2wasm_get_string(prop_name);
+    console.log("prop_name_formatted",prop_name_formatted);
     console.log("callback",callback);
 
     window['c2wasm_stack'].pop();
