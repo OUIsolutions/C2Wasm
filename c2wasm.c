@@ -36,7 +36,10 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
 
-
+EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback,int stack_index){
+    C2wasmVar (*converted_callback)(int stack_index) = (C2wasmVar (*)(int))callback;
+    converted_callback(stack_index);
+}
 
 EM_JS(void ,c2wasm_start, (void), {
  
@@ -96,15 +99,21 @@ EM_JS(void ,c2wasm_set_bool_prop,(C2wasmVar *js_var,const char *prop_name, int v
 
 EM_JS(void ,c2wasm_set_function_prop,(C2wasmVar *js_var,const char *prop_name, void *callback),{
 
-    window['c2wasm_stack'].push([]);
-    let index = window['c2wasm_stack'].length;
     //dostuf
-
+    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
+    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
     let prop_name_formatted = c2wasm_get_string(prop_name);
-    console.log("prop_name_formatted",prop_name_formatted);
-    console.log("callback",callback);
+    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+    
+    object[prop_name_formatted] = function(args){
 
-    window['c2wasm_stack'].pop();
+        window['c2wasm_stack'].push([]);
+        let index = window['c2wasm_stack'].length;
+        wasmExports.c2wasm_call_c_function(callback,index);
+        window['c2wasm_stack'].pop();
+
+    }
+
 
 });
 
