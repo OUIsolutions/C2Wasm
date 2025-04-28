@@ -87,6 +87,13 @@ EM_JS(void,c2wasm_create_array,(void),{
     return index;
 })
 
+EM_JS(void,c2wasm_create_string,(const char *value),{
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push(value);
+    return index;
+})
+//bool,true,null and undefined its not necessary since they are already defined
+
 //==================================JS Object Props ========================================================
 
 EM_JS(void ,c2wasm_set_int_prop,(long stack_index, const char *prop_name, int value), {
