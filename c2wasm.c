@@ -22,6 +22,9 @@ long c2wasm_document = 4;
 long c2wasm_body  = 5;
 
 
+
+
+
 //===============================C Functions ========================================================
 
 
@@ -97,15 +100,6 @@ EM_JS(void,c2wasm_create_string,(const char *value),{
 //==================================JS Object Props ========================================================
 
 //==================================JS Object Getters=======================================================
-
-EM_JS(void,c2wasm_get_type_prop,(long stack_index, const char *prop_name),{
-    let object = window.c2wasm_stack[stack_index];
-    let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    let element = object[prop_name_formatted];
-    //return the type of element 
-    return typeof element;
-})
-
 
 EM_JS(long ,c2wasm_get_long_prop,(long stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
