@@ -138,6 +138,10 @@ EM_JS(void,c2wasm_set_any_prop,(long stack_index, const char *prop_name, int sta
     object[prop_name_formatted] = window.c2wasm_stack[stack_index_value];
 })
 
+
+//==============================METHODS===================================================================
+
+
 EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *callback),{
 
     //dostuf
