@@ -97,7 +97,6 @@ EM_JS(void,c2wasm_create_string,(const char *value),{
 })
 //bool,true,null and undefined its not necessary since they are already defined
 
-//==================================JS Object Props ========================================================
 
 //==================================JS Object Getters=======================================================
 
@@ -116,8 +115,11 @@ EM_JS(double ,c2wasm_get_double_prop,(long stack_index, const char *prop_name), 
 EM_JS(long , c2wasm_get_any_prop,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    return object[prop_name_formatted];
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push(object[prop_name_formatted]);
+    return index;
 })
+
 EM_JS(int,c2wasm_is_true_prop,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
