@@ -150,8 +150,8 @@ EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *ca
     
     object[prop_name_formatted] = function(args){
 
-          wasmExports.c2wasm_call_c_function(callback);
-
+        int return_index = wasmExports.c2wasm_call_c_function(callback);
+        return window.c2wasm_stack[return_index];
     }
 
 });
