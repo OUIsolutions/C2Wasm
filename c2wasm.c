@@ -13,8 +13,14 @@
 #define EM_JS(ret, name, params, body) ret name params;
 #endif
 
+long c2wasm_false  = 0;
+long c2wasm_true = 1;
+long c2wasm_null = 2;
+long c2wasm_undefined = 3;
+long c2wasm_window = 3;
+long c2wasm_document = 4;
+long c2wasm_body  = 5;
 
-long  c2wasm_window = 0;
 
 //===============================C Functions ========================================================
 
@@ -30,10 +36,16 @@ EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback){
 //==================================JS Functions ========================================================
 EM_JS(void ,c2wasm_start, (void), {
  
-   if(window.c2wasm_stack == undefined){
-      window.c2wasm_stack = [window];
-   }
 
+   window.c2wasm_stack = [
+      false,
+      true,
+      null,    
+      undefined,
+      window,
+      document,
+      body
+   ];
     window.window.c2wasm_get_string = function(c_str ){
         let str_array  = [];
         let index = 0;
