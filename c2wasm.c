@@ -50,8 +50,23 @@ EM_JS(void ,c2wasm_start, (void), {
     }
 
 });
+//==================================JS Creation=============================================================
+
+EM_JS(void,c2wasm_create_long,(long value),{
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push(value);
+    return index;
+})
+
+EM_JS(void,c2wasm_create_double,(double value),{
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push(value);
+    return index;
+})
+
 
 //==================================JS Object Props ========================================================
+
 EM_JS(void ,c2wasm_set_int_prop,(long stack_index, const char *prop_name, int value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
@@ -86,7 +101,7 @@ EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *ca
     
     object[prop_name_formatted] = function(args){
 
-          wasmExports.c2wasm_call_c_function();
+          wasmExports.c2wasm_call_c_function(callback);
 
     }
 
