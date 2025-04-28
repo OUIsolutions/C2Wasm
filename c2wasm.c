@@ -120,6 +120,19 @@ EM_JS(void ,c2wasm_set_bool_prop,(long stack_index, const char *prop_name, int v
     object[prop_name_formatted] = value;
 });
 
+EM_JS(void ,c2wasm_set_null_prop,(long stack_index, const char *prop_name), {
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    object[prop_name_formatted] = null;
+});
+
+EM_JS(void ,c2wasm_set_undefined_prop,(long stack_index, const char *prop_name), {
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    object[prop_name_formatted] = undefined;
+});
+
+
 
 EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *callback),{
 
