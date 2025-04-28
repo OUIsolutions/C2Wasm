@@ -15,36 +15,24 @@
 
 
 
-typedef struct C2wasmVar {
-  long  stack_index;
-  long internal_stack_index;
-} C2wasmVar;
+long  c2wasm_window = 0;
 
-
-EMSCRIPTEN_KEEPALIVE long  C2wasmVar_get_stack_index(C2wasmVar *js_var) {
-  return js_var->stack_index;
-}
-EMSCRIPTEN_KEEPALIVE long  C2wasmVar_get_internal_stack_index(C2wasmVar *js_var) {
-  return js_var->internal_stack_index;
-}
-
-
-C2wasmVar c2wasm_window = {0, 0};
+//===============================C Functions ========================================================
 
 
 EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
 
-EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback,int stack_index){
-    C2wasmVar (*converted_callback)(int stack_index) = (C2wasmVar (*)(int))callback;
-    converted_callback(stack_index);
+EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback){
+    void (*converted_callback)(int stack_index) = (void (*)(int))callback;
+    converted_callback();
 }
-
+//==================================JS Functions ========================================================
 EM_JS(void ,c2wasm_start, (void), {
  
    if(window['c2wasm_stack'] == undefined){
-      window['c2wasm_stack'] = [[window]];
+      window['c2wasm_stack'] = [window];
 
       window['c2wasm_get_string'] = function(c_str ){
          let str_array  = [];
@@ -63,54 +51,41 @@ EM_JS(void ,c2wasm_start, (void), {
 });
 
 
-EM_JS(void ,c2wasm_set_int_prop,(C2wasmVar *js_var,const char *prop_name, int value), {
-    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
-    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
-    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+EM_JS(void ,c2wasm_set_int_prop,(long stack_index, long internal_stack_index, const char *prop_name, int value), {
+    let object = window['c2wasm_stack'][stack_index]
     let prop_name_formatted = c2wasm_get_string(prop_name);
     object[prop_name_formatted] = value;
 });
 
-EM_JS(void ,c2wasm_set_float_prop,(C2wasmVar *js_var,const char *prop_name, float value), {
-    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
-    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
-    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+EM_JS(void ,c2wasm_set_float_prop,(long stack_index, long internal_stack_index, const char *prop_name, float value), {
+    let object = window['c2wasm_stack'][stack_index]
     let prop_name_formatted = c2wasm_get_string(prop_name);
     object[prop_name_formatted] = value;
 });
 
-EM_JS(void ,c2wasm_set_string_prop,(C2wasmVar *js_var,const char *prop_name, const char *value), {
-    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
-    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
-    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+EM_JS(void ,c2wasm_set_string_prop,(long stack_index, long internal_stack_index, const char *prop_name, const char *value), {
+    let object = window['c2wasm_stack'][stack_index]
     let prop_name_formatted = c2wasm_get_string(prop_name);
     let value_formatted = c2wasm_get_string(value);
     object[prop_name_formatted] = value_formatted;
 });
-EM_JS(void ,c2wasm_set_bool_prop,(C2wasmVar *js_var,const char *prop_name, int value), {
-    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
-    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
-    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+EM_JS(void ,c2wasm_set_bool_prop,(long stack_index, long internal_stack_index, const char *prop_name, int value), {
+    let object = window['c2wasm_stack'][stack_index]
     let prop_name_formatted = c2wasm_get_string(prop_name);
     object[prop_name_formatted] = value;
 });
 
 
 
-EM_JS(void ,c2wasm_set_function_prop,(C2wasmVar *js_var,const char *prop_name, void *callback),{
+EM_JS(void ,c2wasm_set_function_prop,(long stack_index, const char *prop_name, void *callback),{
 
     //dostuf
-    let stack_index = wasmExports.C2wasmVar_get_stack_index(js_var);
-    let internal_stack_index = wasmExports.C2wasmVar_get_internal_stack_index(js_var);
     let prop_name_formatted = c2wasm_get_string(prop_name);
-    let object = window['c2wasm_stack'][stack_index][internal_stack_index];
+    let object = window['c2wasm_stack'][stack_index]
     
     object[prop_name_formatted] = function(args){
 
-        window['c2wasm_stack'].push([]);
-        let index = window['c2wasm_stack'].length;
-        wasmExports.c2wasm_call_c_function(callback,index);
-        window['c2wasm_stack'].pop();
+          wasmExports.c2wasm_call_c_function(callback);
 
     }
 
