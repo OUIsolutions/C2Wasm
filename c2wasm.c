@@ -96,8 +96,51 @@ EM_JS(void,c2wasm_create_string,(const char *value),{
 
 //==================================JS Object Props ========================================================
 
+//==================================JS Object Getters=======================================================
+
+EM_JS(void,c2wasm_get_type_prop,(long stack_index, const char *prop_name),{
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    let element = object[prop_name_formatted];
+    //return the type of element 
+    return typeof element;
+})
 
 
+EM_JS(long ,c2wasm_get_long_prop,(long stack_index, const char *prop_name), {
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    return object[prop_name_formatted];
+});
+
+EM_JS(double ,c2wasm_get_double_prop,(long stack_index, const char *prop_name), {
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    return object[prop_name_formatted];
+});
+
+EM_JS(long , c2wasm_get_any_prop,(long stack_index, const char *prop_name),{
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    return object[prop_name_formatted];
+})
+EM_JS(int,c2wasm_is_true_prop,(long stack_index, const char *prop_name),{
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    return object[prop_name_formatted] == true;
+})
+
+EM_JS(int,c2wasm_is_undefined_prop,(long stack_index, const char *prop_name),{
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    return object[prop_name_formatted] == undefined;
+})
+
+EM_JS(int,c2wasm_is_null_prop,(long stack_index, const char *prop_name),{
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    return object[prop_name_formatted] == null;
+})
 //==================================JS Object Seters ========================================================
 
 EM_JS(void ,c2wasm_set_int_prop,(long stack_index, const char *prop_name, int value), {
@@ -141,9 +184,6 @@ EM_JS(void,c2wasm_set_any_prop,(long stack_index, const char *prop_name, int sta
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = window.c2wasm_stack[stack_index_value];
 })
-
-
-//==============================METHODS===================================================================
 
 
 EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *callback),{
