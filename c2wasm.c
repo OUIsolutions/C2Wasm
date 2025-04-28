@@ -78,7 +78,7 @@ EM_JS(void ,c2wasm_set_bool_prop,(long stack_index, const char *prop_name, int v
 
 
 
-EM_JS(void ,c2wasm_set_function_prop,(long stack_index, const char *prop_name, void *callback),{
+EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *callback),{
 
     //dostuf
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
