@@ -14,7 +14,6 @@
 #endif
 
 
-
 long  c2wasm_window = 0;
 
 //===============================C Functions ========================================================
@@ -64,6 +63,17 @@ EM_JS(void,c2wasm_create_double,(double value),{
     return index;
 })
 
+EM_JS(void,c2wasm_create_object,(void),{
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push({});
+    return index;
+})
+
+EM_JS(void,c2wasm_create_array,(void),{
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push([]);
+    return index;
+})
 
 //==================================JS Object Props ========================================================
 
@@ -92,7 +102,6 @@ EM_JS(void ,c2wasm_set_bool_prop,(long stack_index, const char *prop_name, int v
 });
 
 
-
 EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *callback),{
 
     //dostuf
@@ -104,7 +113,6 @@ EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, void *ca
           wasmExports.c2wasm_call_c_function(callback);
 
     }
-
 
 });
 
