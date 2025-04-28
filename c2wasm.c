@@ -96,6 +96,10 @@ EM_JS(void,c2wasm_create_string,(const char *value),{
 
 //==================================JS Object Props ========================================================
 
+
+
+//==================================JS Object Seters ========================================================
+
 EM_JS(void ,c2wasm_set_int_prop,(long stack_index, const char *prop_name, int value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
