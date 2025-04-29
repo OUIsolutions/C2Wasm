@@ -271,7 +271,6 @@ EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_na
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
         let return_index = wasmExports.c2wasm_call_c_function(callback);
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
-        console.log(return_index);
         return window.c2wasm_stack[return_index];
     }
 
