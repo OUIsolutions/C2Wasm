@@ -176,6 +176,21 @@ $$    $$/ $$    $$/       $$ |  $$ |$$ |      $$ |     $$    $$ |$$    $$ |/    
 
 */
 
+
+/*
+  ______                                 __     
+ /      \                               /  |    
+/$$$$$$  |          ______    ______   _$$ |_   
+$$ |__$$ | ______  /      \  /      \ / $$   |  
+$$    $$ |/      |/$$$$$$  |/$$$$$$  |$$$$$$/   
+$$$$$$$$ |$$$$$$/ $$ |  $$ |$$    $$ |  $$ | __ 
+$$ |  $$ |        $$ \__$$ |$$$$$$$$/   $$ |/  |
+$$ |  $$ |        $$    $$ |$$       |  $$  $$/ 
+$$/   $$/          $$$$$$$ | $$$$$$$/    $$$$/  
+                  /  \__$$ |                    
+                  $$    $$/                     
+                   $$$$$$/                                                                                                                                                                                                                   
+*/
 EM_JS(long ,c2wasm_get_array_long_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
     return array[index];
@@ -207,9 +222,21 @@ EM_JS(int,c2wasm_is_array_index_null,(long stack_index, int index),{
     let array = window.c2wasm_stack[stack_index];
     return array[index] == null;
 });
-//=================================JS Array Setters=========================================================
 
-//=== insert
+/*
+  ______           __                                            __     
+ /      \         /  |                                          /  |    
+/$$$$$$  |        $$/  _______    _______   ______    ______   _$$ |_   
+$$ |__$$ | ______ /  |/       \  /       | /      \  /      \ / $$   |  
+$$    $$ |/      |$$ |$$$$$$$  |/$$$$$$$/ /$$$$$$  |/$$$$$$  |$$$$$$/   
+$$$$$$$$ |$$$$$$/ $$ |$$ |  $$ |$$      \ $$    $$ |$$ |  $$/   $$ | __ 
+$$ |  $$ |        $$ |$$ |  $$ | $$$$$$  |$$$$$$$$/ $$ |        $$ |/  |
+$$ |  $$ |        $$ |$$ |  $$ |/     $$/ $$       |$$ |        $$  $$/ 
+$$/   $$/         $$/ $$/   $$/ $$$$$$$/   $$$$$$$/ $$/          $$$$/  
+                                                                        
+                                                                        
+                                                                                                                                                                           
+*/
 EM_JS(void, c2wasm_insert_array_long_by_index, (long stack_index, int index, long value), {
     let array = window.c2wasm_stack[stack_index];
     array.splice(index, 0, value);
@@ -235,7 +262,20 @@ EM_JS(void, c2wasm_insert_array_bool_by_index, (long stack_index, int index, int
     array.splice(index, 0, value ? true : false);
 });
 
-//=== append
+/*
+  ______                                                                  __ 
+ /      \                                                                /  |
+/$$$$$$  |         ______    ______    ______    ______   _______    ____$$ |
+$$ |__$$ | ______ /      \  /      \  /      \  /      \ /       \  /    $$ |
+$$    $$ |/      |$$$$$$  |/$$$$$$  |/$$$$$$  |/$$$$$$  |$$$$$$$  |/$$$$$$$ |
+$$$$$$$$ |$$$$$$/ /    $$ |$$ |  $$ |$$ |  $$ |$$    $$ |$$ |  $$ |$$ |  $$ |
+$$ |  $$ |       /$$$$$$$ |$$ |__$$ |$$ |__$$ |$$$$$$$$/ $$ |  $$ |$$ \__$$ |
+$$ |  $$ |       $$    $$ |$$    $$/ $$    $$/ $$       |$$ |  $$ |$$    $$ |
+$$/   $$/         $$$$$$$/ $$$$$$$/  $$$$$$$/   $$$$$$$/ $$/   $$/  $$$$$$$/ 
+                           $$ |      $$ |                                    
+                           $$ |      $$ |                                    
+                           $$/       $$/                                                                  
+*/
 EM_JS(void, c2wasm_append_array_long, (long stack_index, long value), {
     let array = window.c2wasm_stack[stack_index];
     array.push(value);
@@ -260,7 +300,17 @@ EM_JS(void, c2wasm_append_array_bool, (long stack_index, int value), {
     let array = window.c2wasm_stack[stack_index];
     array.push(value ? true : false);
 });
-
+/*
+  ______                                __     
+ /      \                               /  |    
+/$$$$$$  |          _______   ______   _$$ |_   
+$$ |__$$ | ______  /       | /      \ / $$   |  
+$$    $$ |/      |/$$$$$$$/ /$$$$$$  |$$$$$$/   
+$$$$$$$$ |$$$$$$/ $$      \ $$    $$ |  $$ | __ 
+$$ |  $$ |         $$$$$$  |$$$$$$$$/   $$ |/  |
+$$ |  $$ |        /     $$/ $$       |  $$  $$/ 
+$$/   $$/         $$$$$$$/   $$$$$$$/    $$$$/  
+*/
 
 EM_JS(void ,c2wasm_set_array_long_by_index,(long stack_index, int index, long value), {
     let array = window.c2wasm_stack[stack_index];
@@ -318,6 +368,21 @@ $$    $$/ $$    $$/       $$    $$/ $$    $$/    $$ |$$       |$$       |  $$  $
 
 */
 
+
+/*
+  ______                                 __     
+ /      \                               /  |    
+/$$$$$$  |          ______    ______   _$$ |_   
+$$ |  $$ | ______  /      \  /      \ / $$   |  
+$$ |  $$ |/      |/$$$$$$  |/$$$$$$  |$$$$$$/   
+$$ |  $$ |$$$$$$/ $$ |  $$ |$$    $$ |  $$ | __ 
+$$ \__$$ |        $$ \__$$ |$$$$$$$$/   $$ |/  |
+$$    $$/         $$    $$ |$$       |  $$  $$/ 
+ $$$$$$/           $$$$$$$ | $$$$$$$/    $$$$/  
+                  /  \__$$ |                    
+                  $$    $$/                     
+                   $$$$$$/                      
+*/
 EM_JS(long ,c2wasm_get_object_prop_long,(long stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
@@ -370,8 +435,18 @@ EM_JS(long,c2wasm_call_object_prop,(long stack_index, const char *prop_name,long
 })
 
 
-//==================================JS Object Seters ========================================================
-
+/*
+  ______                                 __     
+ /      \                               /  |    
+/$$$$$$  |          _______   ______   _$$ |_   
+$$ |  $$ | ______  /       | /      \ / $$   |  
+$$ |  $$ |/      |/$$$$$$$/ /$$$$$$  |$$$$$$/   
+$$ |  $$ |$$$$$$/ $$      \ $$    $$ |  $$ | __ 
+$$ \__$$ |         $$$$$$  |$$$$$$$$/   $$ |/  |
+$$    $$/         /     $$/ $$       |  $$  $$/ 
+ $$$$$$/          $$$$$$$/   $$$$$$$/    $$$$/  
+                                                
+*/
 EM_JS(void ,c2wasm_set_object_prop_long,(long stack_index, const char *prop_name, long value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
