@@ -33,9 +33,9 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
 
-EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(void *callback){
-    long (*converted_callback)(long internal_values,long args) = (long (*)(long,long))callback;
-    return converted_callback(0,c2wasm_arguments);
+EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(long internal_args,void *callback){
+    long (*converted_callback)(long internal_args,long args) = (long (*)(long,long))callback;
+    return converted_callback(internal_args,c2wasm_arguments);
 }
 
 //==================================JS Functions ========================================================
@@ -260,7 +260,7 @@ EM_JS(void,c2wasm_set_object_prop_any,(long stack_index, const char *prop_name, 
 })
 
 
-EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_name, void *callback  ),{
+EM_JS(void ,c2wasm_set_object_prop_function,(long stack_index, const char *prop_name,long internal_args, void *callback),{
 
     //dostuf
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
@@ -269,7 +269,7 @@ EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_na
     object[prop_name_formatted] = function(){
         let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
-        let return_index = wasmExports.c2wasm_call_c_function(callback);
+        let return_index = wasmExports.c2wasm_call_c_function(internal_args,callback);
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
         return window.c2wasm_stack[return_index];
     }
