@@ -246,7 +246,7 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
     object[prop_name_formatted] = function(){
         let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
-        let return_index = wasmExports.c2wasm_call_c_function(internal_args,callback);
+        let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(internal_args,callback);
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
         return window.c2wasm_stack[return_index];
     }
@@ -269,7 +269,7 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
 
-EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(long internal_args,void *callback){
+EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function_with_internal_args(long internal_args,void *callback){
     long (*converted_callback)(long internal_args,long args) = (long (*)(long,long))callback;
     return converted_callback(internal_args,c2wasm_arguments);
 }
