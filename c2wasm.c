@@ -98,21 +98,22 @@ EM_JS(void,c2wasm_create_string,(const char *value),{
 //bool,true,null and undefined its not necessary since they are already defined
 
 
+
 //==================================JS Object Getters=======================================================
 
-EM_JS(long ,c2wasm_get_long_prop,(long stack_index, const char *prop_name), {
+EM_JS(long ,c2wasm_get_object_prop_long,(long stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted];
 });
 
-EM_JS(double ,c2wasm_get_double_prop,(long stack_index, const char *prop_name), {
+EM_JS(double ,c2wasm_get_object_prop_double,(long stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted];
 });
 
-EM_JS(long , c2wasm_get_any_prop,(long stack_index, const char *prop_name),{
+EM_JS(long , c2wasm_get_object_prop_any,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let index = window.c2wasm_stack.length;
@@ -120,62 +121,68 @@ EM_JS(long , c2wasm_get_any_prop,(long stack_index, const char *prop_name),{
     return index;
 })
 
-EM_JS(int,c2wasm_is_true_prop,(long stack_index, const char *prop_name),{
+EM_JS(int,c2wasm_is_object_prop_true,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted] == true;
 })
 
-EM_JS(int,c2wasm_is_undefined_prop,(long stack_index, const char *prop_name),{
+EM_JS(int,c2wasm_is_object_prop_undefined,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted] == undefined;
 })
 
-EM_JS(int,c2wasm_is_null_prop,(long stack_index, const char *prop_name),{
+EM_JS(int,c2wasm_is_object_prop_null,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted] == null;
 })
 //==================================JS Object Seters ========================================================
 
-EM_JS(void ,c2wasm_set_int_prop,(long stack_index, const char *prop_name, int value), {
+EM_JS(void ,c2wasm_set_object_prop_long,(long stack_index, const char *prop_name, long value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = value;
 });
 
-EM_JS(void ,c2wasm_set_float_prop,(long stack_index, const char *prop_name, float value), {
+EM_JS(void ,c2wasm_set_object_prop_float,(long stack_index, const char *prop_name, float value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = value;
 });
 
-EM_JS(void ,c2wasm_set_string_prop,(long stack_index, const char *prop_name, const char *value), {
+EM_JS(void ,c2wasm_set_object_prop_string,(long stack_index, const char *prop_name, const char *value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let value_formatted = window.c2wasm_get_string(value);
     object[prop_name_formatted] = value_formatted;
 });
-EM_JS(void ,c2wasm_set_bool_prop,(long stack_index, const char *prop_name, int value), {
+
+EM_JS(void ,c2wasm_set_object_prop_bool,(long stack_index, const char *prop_name, int value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    object[prop_name_formatted] = value;
+    if (value == 0){
+        object[prop_name_formatted] = false;
+    }
+    if (value > 0){
+        object[prop_name_formatted] = true;
+    }
 });
 
-EM_JS(void ,c2wasm_set_null_prop,(long stack_index, const char *prop_name), {
+EM_JS(void ,c2wasm_set_object_prop_null,(long stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = null;
 });
 
-EM_JS(void ,c2wasm_set_undefined_prop,(long stack_index, const char *prop_name), {
+EM_JS(void ,c2wasm_set_object_prop_undefined,(long stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = undefined;
 });
 
-EM_JS(void,c2wasm_set_any_prop,(long stack_index, const char *prop_name, int stack_index_value),{
+EM_JS(void,c2wasm_set_object_prop_any,(long stack_index, const char *prop_name, int stack_index_value),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = window.c2wasm_stack[stack_index_value];
