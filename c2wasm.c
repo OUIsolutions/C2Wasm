@@ -64,7 +64,7 @@ $$    $$/ $$    $$/       $$    $$/  $$  $$/ $$    $$ |$$ |        $$  $$/
  $$$$$$/   $$$$$$/         $$$$$$/    $$$$/   $$$$$$$/ $$/          $$$$/  
 */
 
-EM_JS(void ,c2wasm_start, (void), {
+EM_JS(void ,c2wasm_start, (), {
  
 
    window.c2wasm_stack = [
