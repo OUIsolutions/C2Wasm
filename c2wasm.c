@@ -253,7 +253,7 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
 });
 
 
-EM_JS(void ,c2wasm_set_object_prop_function,(long stack_index, const char *prop_name, void *callback),{
+EM_JS(void ,private_c2wasm_set_object_prop_function_raw,(long stack_index, const char *prop_name, void *callback),{
       //dostuf
       let prop_name_formatted = window.c2wasm_get_string(prop_name);
       let object = window.c2wasm_stack[stack_index];
@@ -296,5 +296,9 @@ EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(void *callback){
 
 EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function_with_internal_args(long stack_index, const char *prop_name, long internal_args, long (*callback)(long internal_args,long args)){
     private_c2wasm_set_object_prop_function_with_internal_args_raw(stack_index,prop_name,internal_args,callback);
+}
+
+EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function(long stack_index, const char *prop_name, long (*callback)(long args)){
+    private_c2wasm_set_object_prop_function_raw(stack_index,prop_name,callback);
 }
 #endif // __c2wasm_c__
