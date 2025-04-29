@@ -58,7 +58,7 @@ SOFTWARE.
 #endif
 
 
-#define c2wasm_var long
+#define c2wasm_js_var long
 /*
  /      \  /  |                          /  |    
 /$$$$$$  |_$$ |_     ______    ______   _$$ |_   

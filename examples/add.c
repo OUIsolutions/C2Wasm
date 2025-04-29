@@ -1,9 +1,9 @@
 #include "c2wasm.c"
 
-c2wasm_var add(){
+c2wasm_js_var add(){
     double a = c2wasm_get_array_double_by_index(c2wasm_arguments,0);
     double b = c2wasm_get_array_double_by_index(c2wasm_arguments,1);
-    c2wasm_var result = c2wasm_create_double(a + b+300);
+    c2wasm_js_var result = c2wasm_create_double(a + b+300);
     return result; 
 }
 
