@@ -96,7 +96,75 @@ EM_JS(void,c2wasm_create_string,(const char *value),{
     return index;
 })
 //bool,true,null and undefined its not necessary since they are already defined
+//=================================JS Array Getters=========================================================
 
+EM_JS(long ,c2wasm_get_array_long_by_index,(long stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    return array[index];
+});
+
+EM_JS(double ,c2wasm_get_array_double_by_index,(long stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    return array[index];
+});
+
+EM_JS(long ,c2wasm_get_array_any_by_index,(long stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    let index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push(array[index]);
+    return index;
+});
+
+EM_JS(int,c2wasm_is_array_index_true,(long stack_index, int index),{
+    let array = window.c2wasm_stack[stack_index];
+    return array[index] == true;
+})
+
+EM_JS(int,c2wasm_is_array_index_undefined,(long stack_index, int index),{
+    let array = window.c2wasm_stack[stack_index];
+    return array[index] == undefined;
+})
+
+EM_JS(int,c2wasm_is_array_index_null,(long stack_index, int index),{
+    let array = window.c2wasm_stack[stack_index];
+    return array[index] == null;
+})
+//=================================JS Array Setters=========================================================
+
+EM_JS(void ,c2wasm_set_array_long_by_index,(long stack_index, int index, long value), {
+    let array = window.c2wasm_stack[stack_index];
+    array[index] = value;
+});
+
+EM_JS(void ,c2wasm_set_array_double_by_index,(long stack_index, int index, double value), {
+    let array = window.c2wasm_stack[stack_index];
+    array[index] = value;
+});
+
+EM_JS(void ,c2wasm_set_array_any_by_index,(long stack_index, int index, int stack_index_value),{
+    let array = window.c2wasm_stack[stack_index];
+    array[index] = window.c2wasm_stack[stack_index_value];
+})
+
+EM_JS(void ,c2wasm_set_array_index_bool,(long stack_index, int index, int value), {
+    let array = window.c2wasm_stack[stack_index];
+    if (value == 0){
+        array[index] = false;
+    }
+    if (value > 0){
+        array[index] = true;
+    }
+});
+
+EM_JS(void ,c2wasm_set_array_index_null,(long stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    array[index] = null;
+});
+
+EM_JS(void ,c2wasm_set_array_index_undefined,(long stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    array[index] = undefined;
+});
 
 
 //==================================JS Object Getters=======================================================
