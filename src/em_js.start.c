@@ -35,7 +35,7 @@ EM_JS(void ,c2wasm_start, (void), {
     window.c2wasm_stack[7] = document.body;
 
 
-    window.window.c2wasm_get_string = function(c_str ){
+    window.c2wasm_get_string = function(c_str ){
         let str_array  = [];
         let index = 0;
         while (true){
@@ -48,5 +48,14 @@ EM_JS(void ,c2wasm_start, (void), {
         }
         return String.fromCharCode.apply(null, str_array);
     }
-
+    window.c2wasm_get_stack_point = function(){
+        for(let i= 8; i < window.c2wasm_stack.length; i++){
+            if (window.c2wasm_stack[i] == undefined){
+                window.c2wasm_stack[i] = 0;
+                return i;
+            }
+        }
+        window.c2wasm_stack.push(0);
+        return window.c2wasm_stack.length - 1;
+    }
 });

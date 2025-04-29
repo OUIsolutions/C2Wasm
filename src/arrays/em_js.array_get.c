@@ -32,8 +32,8 @@ EM_JS(double ,c2wasm_get_array_double_by_index,(long stack_index, int index), {
 
 EM_JS(long ,c2wasm_get_array_any_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
-    let created_index = window.c2wasm_stack.length;
-    window.c2wasm_stack.push(array[created_index]);
+    let created_index = window.c2wasm_get_stack_point();
+    window.c2wasm_stack[created_index] = array[index];
     return created_index;
 });
 
