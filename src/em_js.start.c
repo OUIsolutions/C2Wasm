@@ -1,0 +1,32 @@
+EM_JS(void ,c2wasm_start, (void), {
+    
+    if (window.c2wasm_started){
+        return;
+    }
+    window.c2wasm_started = true;
+    window.c2wasm_stack = [];
+    window.c2wasm_stack[0] = false;
+    window.c2wasm_stack[1] = true;
+    window.c2wasm_stack[2] = null;
+    window.c2wasm_stack[3] = undefined;
+    window.c2wasm_stack[4] = arguments;
+    window.c2wasm_stack[5] = window;
+    window.c2wasm_stack[6] = document;
+    window.c2wasm_stack[7] = document.body;
+
+
+    window.window.c2wasm_get_string = function(c_str ){
+        let str_array  = [];
+        let index = 0;
+        while (true){
+        let current_char = wasmExports.c2wasm_get_char(c_str,index);
+        if (current_char == 0){
+            break;
+        }
+        str_array[index] = current_char; 
+        index++;
+        }
+        return String.fromCharCode.apply(null, str_array);
+    }
+
+});
