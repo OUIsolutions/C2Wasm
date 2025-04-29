@@ -285,20 +285,20 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
 }
 
 EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function_with_internal_args(long internal_args,void *callback){
-    long (*converted_callback)(long internal_args,long args) = (long (*)(long,long))callback;
-    return converted_callback(internal_args,c2wasm_arguments);
+    long (*converted_callback)(long internal_args) = (long (*)(long))callback;
+    return converted_callback(internal_args);
 }
 
 EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(void *callback){
-    long (*converted_callback)(long args) = (long (*)(long))callback;
-    return converted_callback(c2wasm_arguments);
+    long (*converted_callback)() = (long (*)())callback;
+    return converted_callback();
 }
 
-EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function_with_internal_args(long stack_index, const char *prop_name, long internal_args, long (*callback)(long internal_args,long args)){
+EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function_with_internal_args(long stack_index, const char *prop_name, long internal_args, long (*callback)(long internal_args)){
     private_c2wasm_set_object_prop_function_with_internal_args_raw(stack_index,prop_name,internal_args,callback);
 }
 
-EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function(long stack_index, const char *prop_name, long (*callback)(long args)){
+EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function(long stack_index, const char *prop_name, long (*callback)()){
     private_c2wasm_set_object_prop_function_raw(stack_index,prop_name,callback);
 }
 #endif // __c2wasm_c__
