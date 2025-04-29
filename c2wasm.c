@@ -197,12 +197,17 @@ EM_JS(void ,c2wasm_set_array_double_by_index,(long stack_index, int index, doubl
     array[index] = value;
 });
 
+EM_JS(void ,c2wasm_set_array_string_by_index,(long stack_index, int index, const char *value), {
+    let array = window.c2wasm_stack[stack_index];
+    array[index] = window.c2wasm_get_string(value);
+});
+
 EM_JS(void ,c2wasm_set_array_any_by_index,(long stack_index, int index, int stack_index_value),{
     let array = window.c2wasm_stack[stack_index];
     array[index] = window.c2wasm_stack[stack_index_value];
 })
 
-EM_JS(void ,c2wasm_set_array_index_bool,(long stack_index, int index, int value), {
+EM_JS(void ,c2wasm_set_array_bool_by_index,(long stack_index, int index, int value), {
     let array = window.c2wasm_stack[stack_index];
     if (value == 0){
         array[index] = false;
@@ -212,12 +217,12 @@ EM_JS(void ,c2wasm_set_array_index_bool,(long stack_index, int index, int value)
     }
 });
 
-EM_JS(void ,c2wasm_set_array_index_null,(long stack_index, int index), {
+EM_JS(void ,c2wasm_set_array_null_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
     array[index] = null;
 });
 
-EM_JS(void ,c2wasm_set_array_index_undefined,(long stack_index, int index), {
+EM_JS(void ,c2wasm_set_array_undefined_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
     array[index] = undefined;
 });
