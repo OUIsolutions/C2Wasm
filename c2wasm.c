@@ -37,6 +37,7 @@ EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback){
     long (*converted_callback)(long internal_values,long args) = (long (*)(long,long))callback;
     converted_callback(0,c2wasm_arguments);
 }
+
 //==================================JS Functions ========================================================
 EM_JS(void ,c2wasm_start, (void), {
  
@@ -111,9 +112,9 @@ EM_JS(double ,c2wasm_get_array_double_by_index,(long stack_index, int index), {
 
 EM_JS(long ,c2wasm_get_array_any_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
-    let index = window.c2wasm_stack.length;
-    window.c2wasm_stack.push(array[index]);
-    return index;
+    let created_index = window.c2wasm_stack.length;
+    window.c2wasm_stack.push(array[created_index]);
+    return created_index;
 });
 
 EM_JS(int,c2wasm_is_array_index_true,(long stack_index, int index),{
