@@ -13,30 +13,6 @@
 #define EM_JS(ret, name, params, body) ret name params;
 #endif
 
-long c2wasm_false  = 0;
-long c2wasm_true = 1;
-long c2wasm_null = 2;
-long c2wasm_undefined = 3;
-long c2wasm_arguments = 4;
-long c2wasm_window = 5;
-long c2wasm_document = 6;
-long c2wasm_body  = 7;
-
-
-
-
-
-//===============================C Functions ========================================================
-
-
-EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
-    return str[index];
-}
-
-EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(long internal_args,void *callback){
-    long (*converted_callback)(long internal_args,long args) = (long (*)(long,long))callback;
-    return converted_callback(internal_args,c2wasm_arguments);
-}
 
 
 //==================================JS Functions ========================================================
@@ -276,6 +252,28 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
     }
 
 });
+
+//===============================C Functions ========================================================
+
+long c2wasm_false  = 0;
+long c2wasm_true = 1;
+long c2wasm_null = 2;
+long c2wasm_undefined = 3;
+long c2wasm_arguments = 4;
+long c2wasm_window = 5;
+long c2wasm_document = 6;
+long c2wasm_body  = 7;
+
+
+EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
+    return str[index];
+}
+
+EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(long internal_args,void *callback){
+    long (*converted_callback)(long internal_args,long args) = (long (*)(long,long))callback;
+    return converted_callback(internal_args,c2wasm_arguments);
+}
+
 
 EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function_with_internal_args(long stack_index, const char *prop_name, long internal_args, long (*callback)(long internal_args,long args)){
     private_c2wasm_set_object_prop_function_with_internal_args_raw(stack_index,prop_name,internal_args,callback);
