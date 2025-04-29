@@ -1,3 +1,9 @@
+//silver_chain_scope_start
+//DONT MODIFY THIS COMMENT
+//this import is computationally generated
+//mannaged by SilverChain: https://github.com/OUIsolutions/SilverChain
+#include "../imports/imports.macro.h"
+//silver_chain_scope_end
 EM_JS(long ,c2wasm_get_array_long_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
     return array[index];

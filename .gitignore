@@ -9,6 +9,7 @@ build_test.sh
 *.d
 teste.html
 # Object files
+src/imports
 *.o
 *.ko
 *.obj
