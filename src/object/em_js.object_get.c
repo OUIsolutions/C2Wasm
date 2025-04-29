@@ -36,10 +36,26 @@ EM_JS(double ,c2wasm_get_object_prop_double,(long stack_index, const char *prop_
 
 EM_JS(long , c2wasm_get_object_prop_any,(long stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
+
+
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    let index = window.c2wasm_get_stack_point();
-    window.c2wasm_stack[index] = object[prop_name_formatted];
-    return index;
+    let value  = object[prop_name_formatted];
+    if(value == false){
+        return  window.c2wasm_false;
+    }
+    if(value == true){
+        return window.c2wasm_true;
+    }
+    if(value == null){
+        return window.c2wasm_null;
+    }
+    if(value == undefined){
+        return window.c2wasm_undefined;
+    }
+
+    let created_index = window.c2wasm_get_stack_point();
+    window.c2wasm_stack[created_index] = value;
+    return created_index;
     
 })
 

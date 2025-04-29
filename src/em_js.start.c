@@ -23,7 +23,17 @@ EM_JS(void ,c2wasm_start, (void), {
     if (window.c2wasm_started){
         return;
     }
+
+    
     window.c2wasm_started = true;
+
+
+    window.c2wasm_false = 0;
+    window.c2wasm_true = 1;
+    window.c2wasm_null = 2;
+    window.c2wasm_undefined = 3;
+
+
     window.c2wasm_stack = [];
     window.c2wasm_stack[0] = false;
     window.c2wasm_stack[1] = true;
