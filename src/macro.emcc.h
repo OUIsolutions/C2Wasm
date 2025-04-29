@@ -1,6 +1,4 @@
 
-#ifndef __c2wasm_c__
-#define __c2wasm_c__
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>

@@ -4,7 +4,7 @@
 //mannaged by SilverChain: https://github.com/OUIsolutions/SilverChain
 #include "imports/imports.em_js.h"
 //silver_chain_scope_end
-*/
+
 
 
 
