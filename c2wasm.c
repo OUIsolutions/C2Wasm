@@ -33,9 +33,9 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
 
-EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback){
+EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(void *callback){
     long (*converted_callback)(long internal_values,long args) = (long (*)(long,long))callback;
-    converted_callback(0,c2wasm_arguments);
+    return converted_callback(0,c2wasm_arguments);
 }
 
 //==================================JS Functions ========================================================
@@ -47,6 +47,7 @@ EM_JS(void ,c2wasm_start, (void), {
       true,
       null,    
       undefined,
+      [],
       window,
       document,
       document.body
@@ -270,6 +271,7 @@ EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_na
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
         let return_index = wasmExports.c2wasm_call_c_function(callback);
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
+        console.log(return_index);
         return window.c2wasm_stack[return_index];
     }
 
