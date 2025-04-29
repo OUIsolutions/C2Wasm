@@ -10,7 +10,7 @@ EM_JS(void,c2wasm_soft_free,(long stack_index),{
     if(window.c2wasm_stack.length <= stack_index){
         return;
     }
-    window.c2wasm_stack[stack_index] = null;
+    window.c2wasm_stack[stack_index] = undefined;
 });
 
 EM_JS(void,c2wasm_hard_free,(long stack_index),{
