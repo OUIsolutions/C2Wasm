@@ -310,7 +310,7 @@ EM_JS(long,c2wasm_call_object_prop,(long stack_index, const char *prop_name,long
     if(args != -1){
         arguments = window.c2wasm_stack[args];
     }
-    let result = object[prop_name_formatted](arguments);
+    let result = object[prop_name_formatted](...arguments);
     let index = window.c2wasm_stack.length;
     window.c2wasm_stack.push(result);
     return index;
