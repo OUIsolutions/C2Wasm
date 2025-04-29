@@ -209,6 +209,59 @@ EM_JS(int,c2wasm_is_array_index_null,(long stack_index, int index),{
 });
 //=================================JS Array Setters=========================================================
 
+//=== insert
+EM_JS(void, c2wasm_insert_array_long_by_index, (long stack_index, int index, long value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.splice(index, 0, value);
+});
+
+EM_JS(void, c2wasm_insert_array_double_by_index, (long stack_index, int index, double value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.splice(index, 0, value);
+});
+
+EM_JS(void, c2wasm_insert_array_string_by_index, (long stack_index, int index, const char *value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.splice(index, 0, window.c2wasm_get_string(value));
+});
+
+EM_JS(void, c2wasm_insert_array_any_by_index, (long stack_index, int index, int stack_index_value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.splice(index, 0, window.c2wasm_stack[stack_index_value]);
+});
+
+EM_JS(void, c2wasm_insert_array_bool_by_index, (long stack_index, int index, int value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.splice(index, 0, value ? true : false);
+});
+
+//=== append
+EM_JS(void, c2wasm_append_array_long, (long stack_index, long value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.push(value);
+});
+
+EM_JS(void, c2wasm_append_array_double, (long stack_index, double value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.push(value);
+});
+
+EM_JS(void, c2wasm_append_array_string, (long stack_index, const char *value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.push(window.c2wasm_get_string(value));
+});
+
+EM_JS(void, c2wasm_append_array_any, (long stack_index, int stack_index_value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.push(window.c2wasm_stack[stack_index_value]);
+});
+
+EM_JS(void, c2wasm_append_array_bool, (long stack_index, int value), {
+    let array = window.c2wasm_stack[stack_index];
+    array.push(value ? true : false);
+});
+
+
 EM_JS(void ,c2wasm_set_array_long_by_index,(long stack_index, int index, long value), {
     let array = window.c2wasm_stack[stack_index];
     array[index] = value;
