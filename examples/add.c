@@ -9,7 +9,7 @@ long add(){
 
 int main(){
   c2wasm_start();
-  //set add as a global javascript function
+  //set add as a global function
   c2wasm_set_object_prop_function(c2wasm_window, "add",add);
 
 }
