@@ -250,8 +250,23 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
         return window.c2wasm_stack[return_index];
     }
-
 });
+
+
+EM_JS(void ,c2wasm_set_object_prop_function,(long stack_index, const char *prop_name, void *callback),{
+      //dostuf
+      let prop_name_formatted = window.c2wasm_get_string(prop_name);
+      let object = window.c2wasm_stack[stack_index];
+      let ARGUMENTS_STACK_INDEX = 4;
+      object[prop_name_formatted] = function(){
+          let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
+          window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
+          let return_index = wasmExports.c2wasm_call_c_function(callback);
+          window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
+          return window.c2wasm_stack[return_index];
+      }
+})
+
 
 //===============================C Functions ========================================================
 
@@ -274,6 +289,10 @@ EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function_with_internal_args(long interna
     return converted_callback(internal_args,c2wasm_arguments);
 }
 
+EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function(void *callback){
+    long (*converted_callback)(long args) = (long (*)(long))callback;
+    return converted_callback(c2wasm_arguments);
+}
 
 EMSCRIPTEN_KEEPALIVE void c2wasm_set_object_prop_function_with_internal_args(long stack_index, const char *prop_name, long internal_args, long (*callback)(long internal_args,long args)){
     private_c2wasm_set_object_prop_function_with_internal_args_raw(stack_index,prop_name,internal_args,callback);
