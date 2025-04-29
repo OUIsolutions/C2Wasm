@@ -23,15 +23,7 @@ SOFTWARE.
 */
 
 
-#ifndef c2wasm_c
-#define c2wasm_c
-
-
 #include "imports/imports.fdefine.h"
-
-#endif 
-
-
 
 
 /*
