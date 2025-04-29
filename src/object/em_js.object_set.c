@@ -1,6 +1,24 @@
+//silver_chain_scope_start
+//DONT MODIFY THIS COMMENT
+//this import is computationally generated
+//mannaged by SilverChain: https://github.com/OUIsolutions/SilverChain
+#include "../imports/imports.macro.h"
+//silver_chain_scope_end
 
 
-
+/*
+  ______                                 __     
+ /      \                               /  |    
+/$$$$$$  |          _______   ______   _$$ |_   
+$$ |  $$ | ______  /       | /      \ / $$   |  
+$$ |  $$ |/      |/$$$$$$$/ /$$$$$$  |$$$$$$/   
+$$ |  $$ |$$$$$$/ $$      \ $$    $$ |  $$ | __ 
+$$ \__$$ |         $$$$$$  |$$$$$$$$/   $$ |/  |
+$$    $$/         /     $$/ $$       |  $$  $$/ 
+ $$$$$$/          $$$$$$$/   $$$$$$$/    $$$$/  
+                                                
+                                            
+*/
 EM_JS(void ,c2wasm_set_object_prop_long,(long stack_index, const char *prop_name, long value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
