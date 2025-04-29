@@ -6,6 +6,7 @@ teste.wasm
 build_test.sh
 *.wasm
 # Prerequisites
+c2wasm.c
 *.d
 teste.html
 # Object files
