@@ -50,6 +50,35 @@ SOFTWARE.
 #ifndef EM_JS
 #define EM_JS(ret, name, params, body) ret name params;
 #endif
+#ifndef true 
+#define true 1
+#endif
+#ifndef false
+#define false 0
+#endif
+
+/*
+  ______          ______   __            __                  __           
+ /      \        /      \ /  |          /  |                /  |          
+/$$$$$$  |      /$$$$$$  |$$ |  ______  $$ |____    ______  $$ |  _______ 
+$$ |  $$/       $$ | _$$/ $$ | /      \ $$      \  /      \ $$ | /       |
+$$ |            $$ |/    |$$ |/$$$$$$  |$$$$$$$  | $$$$$$  |$$ |/$$$$$$$/ 
+$$ |   __       $$ |$$$$ |$$ |$$ |  $$ |$$ |  $$ | /    $$ |$$ |$$      \ 
+$$ \__/  |      $$ \__$$ |$$ |$$ \__$$ |$$ |__$$ |/$$$$$$$ |$$ | $$$$$$  |
+$$    $$/       $$    $$/ $$ |$$    $$/ $$    $$/ $$    $$ |$$ |/     $$/ 
+ $$$$$$/         $$$$$$/  $$/  $$$$$$/  $$$$$$$/   $$$$$$$/ $$/ $$$$$$$/  
+                                                                          
+                                                                          
+                                                                       
+*/
+#define c2wasm_false 0
+#define c2wasm_true 1
+#define c2wasm_null 2
+#define c2wasm_undefined 3
+#define c2wasm_arguments 4
+#define c2wasm_window 5
+#define c2wasm_document 6
+#define c2wasm_body 7
 
 
 /*
@@ -65,18 +94,22 @@ $$    $$/ $$    $$/       $$    $$/  $$  $$/ $$    $$ |$$ |        $$  $$/
 */
 
 EM_JS(void ,c2wasm_start, (void), {
- 
+    
+    if (window.c2wasm_started){
+        return;
+    }
+    window.c2wasm_started = true;
+    window.c2wasm_stack = [];
+    window.c2wasm_stack[0] = false;
+    window.c2wasm_stack[1] = true;
+    window.c2wasm_stack[2] = null;
+    window.c2wasm_stack[3] = undefined;
+    window.c2wasm_stack[4] = arguments;
+    window.c2wasm_stack[5] = window;
+    window.c2wasm_stack[6] = document;
+    window.c2wasm_stack[7] = document.body;
 
-   window.c2wasm_stack = [
-      false,
-      true,
-      null,    
-      undefined,
-      [],
-      window,
-      document,
-      document.body
-   ];
+
     window.window.c2wasm_get_string = function(c_str ){
         let str_array  = [];
         let index = 0;
@@ -391,14 +424,6 @@ $$    $$/       $$ |    $$    $$/ $$ |  $$ |$$       |  $$  $$/ $$ |$$    $$/ $$
                                                                                                 
 */
 
-long c2wasm_false  = 0;
-long c2wasm_true = 1;
-long c2wasm_null = 2;
-long c2wasm_undefined = 3;
-long c2wasm_arguments = 4;
-long c2wasm_window = 5;
-long c2wasm_document = 6;
-long c2wasm_body  = 7;
 
 
 
