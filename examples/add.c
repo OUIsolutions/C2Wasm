@@ -1,9 +1,9 @@
 #include "c2wasm.c"
 
-long add(){
+c2wasm_ptr add(){
     double a = c2wasm_get_array_double_by_index(c2wasm_arguments,0);
     double b = c2wasm_get_array_double_by_index(c2wasm_arguments,1);
-    long result = c2wasm_create_double(a + b+300);
+    c2wasm_ptr result = c2wasm_create_double(a + b+300);
     return result; 
 }
 
