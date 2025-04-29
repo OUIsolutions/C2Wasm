@@ -4,6 +4,7 @@ teste.c
 a.out.js
 teste.wasm
 build_test.sh
+.vscode
 *.wasm
 # Prerequisites
 c2wasm.c
