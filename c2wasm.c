@@ -49,7 +49,7 @@ EM_JS(void ,c2wasm_start, (void), {
       undefined,
       window,
       document,
-      body
+      document.body
    ];
     window.window.c2wasm_get_string = function(c_str ){
         let str_array  = [];
@@ -259,7 +259,7 @@ EM_JS(void,c2wasm_set_object_prop_any,(long stack_index, const char *prop_name, 
 })
 
 
-EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_name, long (*callback)(long internal_values,long args)   ),{
+EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_name, void *callback  ),{
 
     //dostuf
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
