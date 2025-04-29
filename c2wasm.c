@@ -34,8 +34,8 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
 }
 
 EMSCRIPTEN_KEEPALIVE void c2wasm_call_c_function(void *callback){
-    void (*converted_callback)() = (void (*)())callback;
-    converted_callback();
+    long (*converted_callback)(long internal_values,long args) = (long (*)(long,long))callback;
+    converted_callback(0,c2wasm_arguments);
 }
 //==================================JS Functions ========================================================
 EM_JS(void ,c2wasm_start, (void), {
@@ -258,7 +258,7 @@ EM_JS(void,c2wasm_set_object_prop_any,(long stack_index, const char *prop_name, 
 })
 
 
-EM_JS(void ,c2wasm_set_method,(long stack_index, const char *prop_name, long (*callback)(long internal_values,long args)   ),{
+EM_JS(void ,c2wasm_set_object_prop_method,(long stack_index, const char *prop_name, long (*callback)(long internal_values,long args)   ),{
 
     //dostuf
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
