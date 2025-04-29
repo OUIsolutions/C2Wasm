@@ -85,7 +85,19 @@ EM_JS(long,c2wasm_call_object_prop,(long stack_index, const char *prop_name,long
         arguments = window.c2wasm_stack[args];
     }
     let result = object[prop_name_formatted](...arguments);
-    let index = window.c2wasm_stack.length;
-    window.c2wasm_stack.push(result);
-    return index;
+    if(result == false){
+        return  window.c2wasm_false;
+    }
+    if(result == true){
+        return window.c2wasm_true;
+    }
+    if(result == null){
+        return window.c2wasm_null;
+    }
+    if(result == undefined){
+        return window.c2wasm_undefined;
+    }
+    let created_index = window.c2wasm_get_stack_point();
+    window.c2wasm_stack[created_index] = result;
+    return created_index;
 })
