@@ -12,3 +12,11 @@
 EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
+
+
+EM_JS(void,c2wasm_free,(long stack_index),{
+    if(window.c2wasm_stack.length <= stack_index){
+        return;
+    }
+    delete window.c2wasm_stack[stack_index];
+});
