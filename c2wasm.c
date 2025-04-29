@@ -260,7 +260,7 @@ EM_JS(void,c2wasm_set_object_prop_any,(long stack_index, const char *prop_name, 
 })
 
 
-EM_JS(void ,c2wasm_set_object_prop_function,(long stack_index, const char *prop_name,long internal_args, void *callback),{
+EM_JS(void ,c2wasm_set_object_prop_function_with_internal_args,(long stack_index, const char *prop_name,long internal_args, void *callback),{
 
     //dostuf
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
