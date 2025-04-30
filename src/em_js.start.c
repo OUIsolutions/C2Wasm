@@ -62,11 +62,18 @@ EM_JS(void ,c2wasm_start, (void), {
     window.c2wasm_get_stack_point = function(){
         for(let i= 8; i < window.c2wasm_stack.length; i++){
             if (window.c2wasm_stack[i] == undefined){
+                if(window.c2wasm_old_created_objects){
+                    window.c2wasm_old_created_objects.push(i);
+                }
                 window.c2wasm_stack[i] = 0;
                 return i;
             }
         }
         window.c2wasm_stack.push(0);
-        return window.c2wasm_stack.length - 1;
+        let created_index = window.c2wasm_stack.length - 1;
+        if(window.c2wasm_old_created_objects){
+            window.c2wasm_old_created_objects.push(created_index);
+        }
+        return created_index;
     }
 });
