@@ -74,14 +74,19 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let object = window.c2wasm_stack[stack_index];
     let ARGUMENTS_STACK_INDEX = 4;
+
+    let internal_value = window.c2wasm_stack[internal_args];
+
     object[prop_name_formatted] = function(){
         let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
         let old_local_stack = window.c2wasm_local_stack;
         let current_local_stack = [];
         window.c2wasm_local_stack = current_local_stack;
+        let new_interal_args_index = window.c2wasm_get_stack_point();
+        window.c2wasm_stack[new_interal_args_index] = internal_value;
 
-        let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(internal_args,callback);
+        let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(new_interal_args_index,callback);
         
         for(let i = 0; i < current_local_stack.length; i++){
             let item_to_remove_from_stack = current_local_stack[i];
