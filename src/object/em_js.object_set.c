@@ -82,7 +82,10 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
 
         let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(internal_args,callback);
         
-       
+        for(let i = 0; i < old_created_objects.length; i++){
+            let item_to_remove_from_stack = old_created_objects[i];
+            delete window.c2wasm_stack[item_to_remove_from_stack];
+        }
         
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
         window.c2wasm_old_created_objects = old_created_objects;
