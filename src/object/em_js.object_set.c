@@ -104,7 +104,7 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_raw,(long stack_index, const
           window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
           let return_index = wasmExports.c2wasm_call_c_function(callback);
           window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
-          window.c2wasm_old_created_objects = old_created_objects;
+       //   window.c2wasm_old_created_objects = old_created_objects;
           return window.c2wasm_stack[return_index];
       }
 })
