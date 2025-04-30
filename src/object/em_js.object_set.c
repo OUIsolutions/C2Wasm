@@ -77,18 +77,19 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_with_internal_args_raw,(long
     object[prop_name_formatted] = function(){
         let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
-        let old_created_objects = window.c2wasm_local_stack;
-        window.c2wasm_local_stack = [];
+        let old_local_stack = window.c2wasm_local_stack;
+        let current_local_stack = [];
+        window.c2wasm_local_stack = current_local_stack;
 
         let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(internal_args,callback);
         
-        for(let i = 0; i < old_created_objects.length; i++){
-            let item_to_remove_from_stack = old_created_objects[i];
+        for(let i = 0; i < current_local_stack.length; i++){
+            let item_to_remove_from_stack = current_local_stack[i];
             delete window.c2wasm_stack[item_to_remove_from_stack];
         }
         
         window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
-        window.c2wasm_local_stack = old_created_objects;
+        window.c2wasm_local_stack = old_local_stack;
         
         return window.c2wasm_stack[return_index];
     }
@@ -102,22 +103,24 @@ EM_JS(void ,private_c2wasm_set_object_prop_function_raw,(long stack_index, const
       let ARGUMENTS_STACK_INDEX = 4;
       object[prop_name_formatted] = function(){
           let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
-          let old_created_objects = window.c2wasm_local_stack;
-          let current_created_objects = [];
-          
-          window.c2wasm_local_stack = current_created_objects;
           window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
+
+          let old_local_stack = window.c2wasm_local_stack;
+          let current_local_stack = [];
+          window.c2wasm_local_stack = current_local_stack;
+          
+          
           let return_index = wasmExports.c2wasm_call_c_function(callback);
           
           
-          for(let i = 0; i < current_created_objects.length; i++){
-            let item_to_remove_from_stack = current_created_objects[i];
+          for(let i = 0; i < current_local_stack.length; i++){
+            let item_to_remove_from_stack = current_local_stack[i];
             delete window.c2wasm_stack[item_to_remove_from_stack];
           }
 
           
           window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
-          window.c2wasm_local_stack = old_created_objects;
+          window.c2wasm_local_stack = old_local_stack;
           return window.c2wasm_stack[return_index];
       }
 })
