@@ -14,14 +14,9 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
 }
 
 
-EM_JS(void,c2wasm_free,(long stack_index),{
-    if(window.c2wasm_stack.length <= stack_index){
-        return;
+EMSCRIPTEN_KEEPALIVE void* c2wasm_memcpy(char *dest, const char *src, int size) {
+    for (int i = 0; i < size; i++) {
+        dest[i] = src[i];
     }
-    if(window.c2wasm_local_stack){
-        //itremove the stack index from old_created obj
-        let index_of_stack = window.c2wasm_local_stack.indexOf(stack_index);
-        window.c2wasm_local_stack.splice(index_of_stack, 1);
-    }
-    delete window.c2wasm_stack[stack_index];
-});
+    return dest;
+}
