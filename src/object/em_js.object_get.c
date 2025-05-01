@@ -22,19 +22,19 @@ $$    $$/         $$    $$ |$$       |  $$  $$/
 
 */
 
-EM_JS(long ,c2wasm_get_object_prop_long,(long stack_index, const char *prop_name), {
+EM_JS(long ,c2wasm_get_object_prop_long,(c2wasm_js_var stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted];
 });
 
-EM_JS(double ,c2wasm_get_object_prop_double,(long stack_index, const char *prop_name), {
+EM_JS(double ,c2wasm_get_object_prop_double,(c2wasm_js_var stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted];
 });
 
-EM_JS(long , c2wasm_get_object_prop_any,(long stack_index, const char *prop_name),{
+EM_JS(c2wasm_js_var , c2wasm_get_object_prop_any,(c2wasm_js_var stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
 
 
@@ -59,25 +59,8 @@ EM_JS(long , c2wasm_get_object_prop_any,(long stack_index, const char *prop_name
     
 })
 
-EM_JS(int,c2wasm_is_object_prop_true,(long stack_index, const char *prop_name),{
-    let object = window.c2wasm_stack[stack_index];
-    let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    return object[prop_name_formatted] == true;
-})
 
-EM_JS(int,c2wasm_is_object_prop_undefined,(long stack_index, const char *prop_name),{
-    let object = window.c2wasm_stack[stack_index];
-    let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    return object[prop_name_formatted] == undefined;
-})
-
-EM_JS(int,c2wasm_is_object_prop_null,(long stack_index, const char *prop_name),{
-    let object = window.c2wasm_stack[stack_index];
-    let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    return object[prop_name_formatted] == null;
-})
-
-EM_JS(long,c2wasm_call_object_prop,(long stack_index, const char *prop_name,long args),{
+EM_JS(c2wasm_js_var,c2wasm_call_object_prop,(c2wasm_js_var stack_index, const char *prop_name,c2wasm_js_var args),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let arguments = undefined;

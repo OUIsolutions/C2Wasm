@@ -30,7 +30,9 @@ EM_JS(double ,c2wasm_get_array_double_by_index,(long stack_index, int index), {
     return array[index];
 });
 
-EM_JS(long ,c2wasm_get_array_any_by_index,(long stack_index, int index), {
+
+
+EM_JS(c2wasm_js_var ,c2wasm_get_array_any_by_index,(long stack_index, int index), {
     let array = window.c2wasm_stack[stack_index];
 
     let value = array[index];

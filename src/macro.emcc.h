@@ -19,4 +19,4 @@
 #endif
 
 
-#define c2wasm_js_var long
+typedef long c2wasm_js_var;
