@@ -101,6 +101,10 @@ EM_JS(void ,c2wasm_start, (void), {
            
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
             window.c2wasm_local_stack = old_local_stack;
+
+            if (return_value instanceof Error){
+                throw return_value;
+            }
             return return_value;
         };
     };
@@ -125,6 +129,10 @@ EM_JS(void ,c2wasm_start, (void), {
            
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
             window.c2wasm_local_stack = old_local_stack;
+
+            if( return_value instanceof Error){
+                throw return_value;
+            }
             return return_value;
         };
     };
