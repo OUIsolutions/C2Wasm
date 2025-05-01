@@ -4,4 +4,5 @@ make  frontend applications directly in  C
 
 ## Getting Started 
 
-- 1 Install ecm
+- 1 Install [ecmmscripten](https://github.com/emscripten-core/emsdk) 
+  if you prefer, here its a [quick install](https://github.com/mateusmoutinho/emscripten-easy-install) for instalation 
