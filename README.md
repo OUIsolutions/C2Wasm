@@ -1,19 +1,7 @@
 # C2Wasm
-A ecmmscripten facilitator to wasm , allowing to control js inside c 
+A ecmmscripten facilitator to wasm , allowing to control js inside c ,making easier to 
+make  frontend applications directly in  C 
 
-## Most simple example 
+## Getting Started 
 
-~~~c 
-
-#include "c2wasm.c"
-
-int main(){
-  c2wasm_start();
-
-  c2wasm_set_int_prop(&c2wasm_window, "teste", 33);
-  c2wasm_set_string_prop(&c2wasm_window, "teste2", "hello world");
-}
-~~~
-
-
-https://patorjk.com/software/taag/
+- 1 Install ecm
