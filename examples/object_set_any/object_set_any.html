@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="test.js"></script>
+    <script>
+        function main(){
+            console.log(obj_any);
+            obj_any.my_func();
+            obj_any.my_func_with_internal_args();
+        }
+
+        let interval = setInterval(() => {
+            if(wasmExports){
+                clearInterval(interval);
+                main();
+            }
+        }, 10);
+    </script>
+</head>
+<body>
+   
+</body>
+</html>
