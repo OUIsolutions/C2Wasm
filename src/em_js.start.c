@@ -169,4 +169,6 @@ EM_JS(void ,c2wasm_start, (void), {
         if(typeof value == "bigint"){
             return 9;
         }
+        return -1;
+    };
 });

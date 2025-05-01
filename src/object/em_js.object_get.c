@@ -39,7 +39,7 @@ EM_JS(int ,c2wasm_get_object_prop_type,(c2wasm_js_var stack_index, const char *p
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let value = object[prop_name_formatted];
     return window.c2wasm_get_type(value);
-})
+});
 
 EM_JS(int ,c2wasm_get_object_prop_bool,(c2wasm_js_var stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
@@ -51,7 +51,7 @@ EM_JS(int ,c2wasm_get_object_prop_bool,(c2wasm_js_var stack_index, const char *p
 
     return 1;
 
-})
+});
 
 EM_JS(c2wasm_js_var , c2wasm_get_object_prop_any,(c2wasm_js_var stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
@@ -76,7 +76,7 @@ EM_JS(c2wasm_js_var , c2wasm_get_object_prop_any,(c2wasm_js_var stack_index, con
     window.c2wasm_stack[created_index] = value;
     return created_index;
     
-})
+});
 
 
 EM_JS(c2wasm_js_var,c2wasm_call_object_prop,(c2wasm_js_var stack_index, const char *prop_name,c2wasm_js_var args),{
@@ -102,4 +102,4 @@ EM_JS(c2wasm_js_var,c2wasm_call_object_prop,(c2wasm_js_var stack_index, const ch
     let created_index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[created_index] = result;
     return created_index;
-})
+});
