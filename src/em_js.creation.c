@@ -48,3 +48,18 @@ EM_JS(long,c2wasm_create_string,(const char *value),{
     window.c2wasm_stack[index] = window.c2wasm_get_string(value);
     return index;
 });
+
+EM_JS(long,c2wasm_create_function_with_internal_argsraw,(c2wasm_js_var internal_args, void *callback),{
+    let internal_value = window.c2wasm_stack[internal_args];
+    let index = window.c2wasm_get_stack_point();
+    window.c2wasm_stack[index] = window.c2wasm_create_js_c_interop_callback_with_internal_arg(internal_value,callback);
+    return index;
+});
+
+
+EM_JS(long,c2wasm_create_function_raw,(void *callback),{
+    let index = window.c2wasm_get_stack_point();
+    window.c2wasm_stack[index] = window.c2wasm_create_js_c_interop_callback(callback);
+    return index;
+});
+
