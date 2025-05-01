@@ -7,8 +7,8 @@ make  frontend applications directly in  C
 - 1 Install [ecmmscripten](https://github.com/emscripten-core/emsdk) 
   if you prefer, here its a [quick install setup](https://github.com/mateusmoutinho/emscripten-easy-install)
 
-- 2 download [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.2.0/c2wasm.c) and save it in a folder 
-- 3 create a **test.c** with a callback function, and save into the same dir you saved [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.2.0/c2wasm.c) 
+- 2 download [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.3.0/c2wasm.c) and save it in a folder 
+- 3 create a **test.c** with a callback function, and save into the same dir you saved [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.3.0/c2wasm.c) 
 ~~~c 
 #include "c2wasm.c"
 #include <stdio.h>
