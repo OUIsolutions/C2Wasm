@@ -74,6 +74,15 @@ than you can build the [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/release
 darwin run_blueprint 
 ~~~
 
+## Docs
+| item | description |
+|------|-------------|
+| [setting_object_props](docs/setting_object_props.md) | setting object properties |
+| [setting_array_props](docs/setting_array_props.md) | setting array properties |
+| [getting_object_props](docs/getting_object_props.md) | getting object properties |
+| [getting_array_props](docs/getting_array_props.md) | getting array properties |
+| [getting_object_props](docs/getting_object_props.md) | getting object properties |
+
 
 ## Examples 
 | dir                                  | description                       |
