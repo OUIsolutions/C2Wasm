@@ -1,7 +1,10 @@
 prompt*
 release
 teste.c
+test.c
+test.js
 a.out.js
+teste.js
 teste.wasm
 build_test.sh
 .vscode

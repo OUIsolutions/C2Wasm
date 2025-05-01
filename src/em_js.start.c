@@ -102,8 +102,8 @@ EM_JS(void ,c2wasm_start, (void), {
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
             window.c2wasm_local_stack = old_local_stack;
             return return_value;
-        }
-    }
+        };
+    };
     window.c2wasm_create_js_c_interop_callback = function(callback){        
 
         return function(){
@@ -126,6 +126,6 @@ EM_JS(void ,c2wasm_start, (void), {
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
             window.c2wasm_local_stack = old_local_stack;
             return return_value;
-        }
-    }
+        };
+    };
 });
