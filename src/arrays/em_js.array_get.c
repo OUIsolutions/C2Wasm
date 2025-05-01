@@ -40,10 +40,13 @@ EM_JS(void* ,c2wasm_array_memcpy_string,(long stack_index, int index,int string_
     let array = window.c2wasm_stack[stack_index];
     let value = array[index];
     for(let i = 0; i < size; i++){
+        if(i+string_index >= value.length){
+            break;
+        }
         let current_char = value.charCodeAt(i+string_index);
         console.log(current_char);
     }
-
+    console.log("=============\n");
 });
 
 
