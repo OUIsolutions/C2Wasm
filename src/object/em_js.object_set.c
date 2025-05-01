@@ -19,6 +19,13 @@ $$    $$/         /     $$/ $$       |  $$  $$/
                                                 
                                             
 */
+
+EM_JS(void,c2wasm_delete_object_prop,(c2wasm_js_var stack_index, const char *prop_name), {
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    delete object[prop_name_formatted];
+});
+
 EM_JS(void ,c2wasm_set_object_prop_long,(long stack_index, const char *prop_name, long value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);

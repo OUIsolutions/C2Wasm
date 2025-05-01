@@ -16,6 +16,12 @@ $$ |  $$ |         $$$$$$  |$$$$$$$$/   $$ |/  |
 $$ |  $$ |        /     $$/ $$       |  $$  $$/ 
 $$/   $$/         $$$$$$$/   $$$$$$$/    $$$$/  
 */
+
+EM_JS(void,c2wasm_pop_array_by_index,(c2wasm_js_var stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    array.splice(index, 1);
+});
+
 EM_JS(void ,c2wasm_set_array_long_by_index,(c2wasm_js_var stack_index, int index, long value), {
     let array = window.c2wasm_stack[stack_index];
     array[index] = value;
