@@ -25,7 +25,7 @@ EM_JS(void ,c2wasm_set_object_prop_long,(long stack_index, const char *prop_name
     object[prop_name_formatted] = value;
 });
 
-EM_JS(void ,c2wasm_set_object_prop_float,(long stack_index, const char *prop_name, float value), {
+EM_JS(void ,c2wasm_set_object_prop_double,(long stack_index, const char *prop_name, float value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     object[prop_name_formatted] = value;
