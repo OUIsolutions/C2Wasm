@@ -69,6 +69,7 @@ yahr
 |[acumulator](/examples/acumulator/)   | acumulator js object created in C |
 |[array_set](/examples/array_set/)   | array_set js object created in C |
 |[array_append](/examples/array_append/)   | array_append js object created in C |
+|[array_iteration](/examples/array_iteration/)| array iteration example | 
 |[object_iteration](/examples/object_iteration/)   | object_iteration js object created in C |
 |[object_set_any](/examples/object_set_any/)   | object_set_any js object created in C |
 |[object_set](/examples/object_set/)   | object_set js object created in C |
