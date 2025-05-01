@@ -1,184 +1,217 @@
 # Setting Object Properties in C2Wasm
 
-This document provides a comprehensive guide to setting properties on JavaScript objects from C code using the C2Wasm library. It covers the available APIs, usage patterns, examples, and important edge cases.
+This guide explains how to set properties on JavaScript objects from C code using the C2Wasm framework, based on examples from `examples/object_properties`.
+
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Creating Objects](#creating-objects)
+3. [Setting Properties](#setting-properties-by-type)
+4. [Function Properties](#setting-function-properties)
+5. [API Reference](#c2wasm-object-property-api-reference)
+6. [Best Practices](#best-practices)
+7. [See Also](#see-also)
+
+## Introduction
+
+C2Wasm enables C code to create and manipulate JavaScript objects when compiled to WebAssembly. This document covers how to create objects and set properties of different types, including numbers, strings, booleans, null, undefined, functions, and other JavaScript values.
 
 ---
 
-## Overview
+## Creating Objects
 
-C2Wasm allows you to create and manipulate JavaScript objects directly from C. You can set properties of different types (number, string, boolean, null, undefined, function, and any JS value) using a set of dedicated functions. This enables seamless interop between C and JS for building rich web applications.
+To create a new JavaScript object, use the `c2wasm_create_object()` function:
 
----
-
-## API Reference
-
-### 1. Setting Properties by Type
-
-- **Long Integer:**
-  ```c
-  void c2wasm_set_object_prop_long(c2wasm_js_var object, const char *prop_name, long value);
-  ```
-- **Double:**
-  ```c
-  void c2wasm_set_object_prop_double(c2wasm_js_var object, const char *prop_name, double value);
-  ```
-- **String:**
-  ```c
-  void c2wasm_set_object_prop_string(c2wasm_js_var object, const char *prop_name, const char *value);
-  ```
-- **Boolean:**
-  ```c
-  void c2wasm_set_object_prop_bool(c2wasm_js_var object, const char *prop_name, int value); // 0 = false, nonzero = true
-  ```
-- **Null:**
-  ```c
-  void c2wasm_set_object_prop_null(c2wasm_js_var object, const char *prop_name);
-  ```
-- **Undefined:**
-  ```c
-  void c2wasm_set_object_prop_undefined(c2wasm_js_var object, const char *prop_name);
-  ```
-- **Any JS Value:**
-  ```c
-  void c2wasm_set_object_prop_any(c2wasm_js_var object, const char *prop_name, c2wasm_js_var value);
-  ```
-
-### 2. Setting Function Properties
-
-- **Function without internal args:**
-  ```c
-  void c2wasm_set_object_prop_function(c2wasm_js_var object, const char *prop_name, c2wasm_js_var (*callback)());
-  ```
-- **Function with internal args:**
-  ```c
-  void c2wasm_set_object_prop_function_with_internal_args(c2wasm_js_var object, const char *prop_name, c2wasm_js_var internal_args, c2wasm_js_var (*callback)(c2wasm_js_var internal_args));
-  ```
-
----
-
-## Usage Examples
-
-### Example 1: Setting All Property Types
 ```c
-#include "c2wasm.c"
-#include <stdio.h>
+c2wasm_js_var my_obj = c2wasm_create_object();
+```
 
-c2wasm_js_var my_func_raw() {
-  printf("my func raw called\n");
+This creates an empty JavaScript object that you can then populate with properties.
+
+## Setting Properties by Type
+
+C2Wasm provides type-specific functions for setting object properties:
+
+```c
+// Create an object
+c2wasm_js_var obj = c2wasm_create_object();
+
+// Set various types of properties
+c2wasm_set_object_prop_long(obj, "count", 100);
+c2wasm_set_object_prop_double(obj, "price", 99.99);
+c2wasm_set_object_prop_string(obj, "name", "Product");
+c2wasm_set_object_prop_bool(obj, "available", 1);  // true
+c2wasm_set_object_prop_null(obj, "metadata");
+c2wasm_set_object_prop_undefined(obj, "optional");
+
+// Set a property with a nested array
+c2wasm_js_var array = c2wasm_create_array();
+c2wasm_append_array_string(array, "item1");
+c2wasm_append_array_string(array, "item2");
+c2wasm_set_object_prop_any(obj, "items", array);
+```
+
+### Available Property Setter Functions
+
+| Function | Description |
+|----------|-------------|
+| `c2wasm_set_object_prop_long(obj, name, value)` | Sets an integer property |
+| `c2wasm_set_object_prop_double(obj, name, value)` | Sets a floating-point property |
+| `c2wasm_set_object_prop_string(obj, name, value)` | Sets a string property |
+| `c2wasm_set_object_prop_bool(obj, name, value)` | Sets a boolean property (0 = false, non-zero = true) |
+| `c2wasm_set_object_prop_null(obj, name)` | Sets a property to JavaScript `null` |
+| `c2wasm_set_object_prop_undefined(obj, name)` | Sets a property to JavaScript `undefined` |
+| `c2wasm_set_object_prop_any(obj, name, value)` | Sets a property to any JavaScript value |
+
+---
+
+## Setting Function Properties
+
+C2Wasm allows you to set object properties that are callable JavaScript functions:
+
+```c
+// Function with no internal state
+c2wasm_js_var my_func() {
+  printf("Function called!\n");
   return c2wasm_undefined;
 }
 
-c2wasm_js_var my_func_with_internal_args_raw(c2wasm_js_var internal_args) {
-  double test_double = c2wasm_get_object_prop_double(internal_args, "test_double");
-  printf("my func with internal args called\n");
-  printf("test_double: %f\n", test_double);
+// Function with access to internal state
+c2wasm_js_var my_stateful_func(c2wasm_js_var internal_args) {
+  double value = c2wasm_get_object_prop_double(internal_args, "counter");
+  printf("Counter value: %f\n", value);
+  return c2wasm_undefined;
+}
+
+// Later in your code:
+c2wasm_js_var obj = c2wasm_create_object();
+
+// Set a simple function property
+c2wasm_set_object_prop_function(obj, "simpleMethod", my_func);
+
+// Create some internal state
+c2wasm_js_var state = c2wasm_create_object();
+c2wasm_set_object_prop_double(state, "counter", 42.0);
+
+// Set a function with access to internal state
+c2wasm_set_object_prop_function_with_internal_args(
+    obj, "statefulMethod", state, my_stateful_func);
+```
+
+### Alternative Method Using Any Type
+
+You can also create functions first and then set them as properties:
+
+```c
+// Create the functions
+c2wasm_js_var func1 = c2wasm_create_function(my_func);
+c2wasm_js_var func2 = c2wasm_create_function_with_internal_args(state, my_stateful_func);
+
+// Set them as properties
+c2wasm_set_object_prop_any(obj, "method1", func1);
+c2wasm_set_object_prop_any(obj, "method2", func2);
+```
+
+## C2Wasm Object Property API Reference
+
+### Object Creation
+
+| Function | Description |
+|----------|-------------|
+| `c2wasm_create_object()` | Creates a new empty JavaScript object |
+
+### Property Setters
+
+| Function | Description |
+|----------|-------------|
+| `c2wasm_set_object_prop_long(obj, name, value)` | Sets an integer property |
+| `c2wasm_set_object_prop_double(obj, name, value)` | Sets a floating-point property |
+| `c2wasm_set_object_prop_string(obj, name, value)` | Sets a string property |
+| `c2wasm_set_object_prop_bool(obj, name, value)` | Sets a boolean property |
+| `c2wasm_set_object_prop_null(obj, name)` | Sets a property to null |
+| `c2wasm_set_object_prop_undefined(obj, name)` | Sets a property to undefined |
+| `c2wasm_set_object_prop_any(obj, name, value)` | Sets a property to any JavaScript value |
+
+### Function Property Setters
+
+| Function | Description |
+|----------|-------------|
+| `c2wasm_set_object_prop_function(obj, name, callback)` | Sets a function property without state |
+| `c2wasm_set_object_prop_function_with_internal_args(obj, name, internal_args, callback)` | Sets a function property with state |
+| `c2wasm_create_function(callback)` | Creates a function to be set via `set_object_prop_any` |
+| `c2wasm_create_function_with_internal_args(internal_args, callback)` | Creates a stateful function |
+
+## Complete Example
+
+```c
+#include "c2wasm.c"
+#include <stdio.h>
+
+// Simple callback function
+c2wasm_js_var my_callback() {
+  printf("Callback function executed!\n");
+  return c2wasm_undefined;
+}
+
+// Function with internal state
+c2wasm_js_var stateful_callback(c2wasm_js_var state) {
+  double counter = c2wasm_get_object_prop_double(state, "counter");
+  printf("Counter value: %f\n", counter);
+  
+  // Increment the counter
+  counter += 1.0;
+  c2wasm_set_object_prop_double(state, "counter", counter);
+  
   return c2wasm_undefined;
 }
 
 int main() {
   c2wasm_start();
-  c2wasm_js_var self = c2wasm_create_object();
-  c2wasm_set_object_prop_long(self, "test", 100);
-  c2wasm_set_object_prop_double(self, "test_double", 110.0);
-  c2wasm_set_object_prop_string(self, "test_string", "test");
-  c2wasm_set_object_prop_bool(self, "test_bool", 1);
-  c2wasm_set_object_prop_null(self, "test_null");
-  c2wasm_set_object_prop_undefined(self, "test_undefined");
-  c2wasm_js_var aray = c2wasm_create_array();
-  c2wasm_set_object_prop_any(self, "test_array", aray);
-  c2wasm_set_object_prop_function(self, "my_func", my_func_raw);
-  c2wasm_set_object_prop_function_with_internal_args(self, "my_func_with_internal_args", self, my_func_with_internal_args_raw);
-  c2wasm_set_object_prop_any(c2wasm_window, "created_obj", self);
-}
-```
-
-### Example 2: Using `c2wasm_set_object_prop_any`
-```c
-#include "c2wasm.c"
-#include <stdio.h>
-
-int main() {
-  c2wasm_start();
-  c2wasm_js_var self = c2wasm_create_object();
-  c2wasm_js_var test = c2wasm_create_long(10);
-  c2wasm_set_object_prop_any(self, "test", test);
-  c2wasm_js_var test_double = c2wasm_create_double(11.0);
-  c2wasm_set_object_prop_any(self, "test_double", test_double);
-  c2wasm_js_var test_string = c2wasm_create_string("test");
-  c2wasm_set_object_prop_any(self, "test_string", test_string);
-  c2wasm_js_var test_bool = c2wasm_create_bool(1);
-  c2wasm_set_object_prop_any(self, "test_bool", test_bool);
-  c2wasm_set_object_prop_any(self, "test_null", c2wasm_null);
-  c2wasm_js_var aray = c2wasm_create_array();
-  c2wasm_set_object_prop_any(self, "test_array", aray);
-  c2wasm_set_object_prop_any(c2wasm_window, "obj_any", self);
-}
-```
-
-### Example 3: Setting Function Properties as Any
-```c
-c2wasm_js_var my_func = c2wasm_create_function(my_func_raw);
-c2wasm_set_object_prop_any(self, "my_func", my_func);
-
-c2wasm_js_var my_func_with_internal_args = c2wasm_create_function_with_internal_args(self, my_func_with_internal_args_raw);
-c2wasm_set_object_prop_any(self, "my_func_with_internal_args", my_func_with_internal_args);
-```
-
----
-
-## When to Use Each Setter
-
-- Use the type-specific setters (`_long`, `_double`, `_string`, `_bool`, etc.) when you know the type at compile time.
-- Use `c2wasm_set_object_prop_any` for dynamic or already-wrapped JS values, including objects, arrays, functions, or when transferring values between JS and C.
-- Use the function setters to expose C callbacks as JS methods.
-
----
-
-## Edge Cases & Tips
-
-- **Overwriting:** Setting a property will overwrite any existing value at that property name.
-- **Type Safety:** Type-specific setters will convert the C type to the corresponding JS type. Using the wrong setter may lead to unexpected JS values.
-- **Null & Undefined:** `c2wasm_set_object_prop_null` and `c2wasm_set_object_prop_undefined` assign the proper JS values (`null` and `undefined`).
-- **Functions:** When setting a function property, you can pass either a C function pointer or a wrapped JS function (via `c2wasm_create_function`).
-- **Window/Object Properties:** You can set properties on global objects like `window` using `c2wasm_window`.
-- **Arrays as Properties:** You can assign arrays to object properties using `c2wasm_set_object_prop_any`.
-- **Memory Management:** If you create intermediate JS values (objects, arrays, functions), ensure you manage their lifetimes appropriately if your application is long-running.
-
----
-
-## Full Example: Creating and Exposing an Object
-```c
-#include "c2wasm.c"
-#include <stdio.h>
-
-int main() {
-  c2wasm_start();
+  
+  // Create main object
   c2wasm_js_var obj = c2wasm_create_object();
-  c2wasm_set_object_prop_long(obj, "counter", 42);
-  c2wasm_set_object_prop_string(obj, "description", "A C-created object");
-  c2wasm_set_object_prop_bool(obj, "active", 1);
-  c2wasm_set_object_prop_null(obj, "maybe_null");
-  c2wasm_set_object_prop_undefined(obj, "maybe_undefined");
-  c2wasm_set_object_prop_any(c2wasm_window, "my_c_object", obj);
+  
+  // Set primitive properties
+  c2wasm_set_object_prop_long(obj, "id", 42);
+  c2wasm_set_object_prop_string(obj, "name", "C2Wasm Object");
+  c2wasm_set_object_prop_bool(obj, "enabled", 1);
+  c2wasm_set_object_prop_null(obj, "nullProp");
+  c2wasm_set_object_prop_undefined(obj, "undefinedProp");
+  
+  // Create nested array
+  c2wasm_js_var tags = c2wasm_create_array();
+  c2wasm_append_array_string(tags, "wasm");
+  c2wasm_append_array_string(tags, "c");
+  c2wasm_append_array_string(tags, "javascript");
+  c2wasm_set_object_prop_any(obj, "tags", tags);
+  
+  // Set a simple function
+  c2wasm_set_object_prop_function(obj, "simpleMethod", my_callback);
+  
+  // Set stateful function
+  c2wasm_js_var state = c2wasm_create_object();
+  c2wasm_set_object_prop_double(state, "counter", 0.0);
+  c2wasm_set_object_prop_function_with_internal_args(
+      obj, "countingMethod", state, stateful_callback);
+  
+  // Make object available to JavaScript
+  c2wasm_set_object_prop_any(c2wasm_window, "cObject", obj);
+  
+  return 0;
 }
 ```
-
----
 
 ## Best Practices
 
-- Prefer type-specific setters for clarity and safety.
-- Use `c2wasm_set_object_prop_any` for maximum flexibility.
-- Always check for errors in your C code when interacting with JS (e.g., null pointers, invalid property names).
-- Document your C functions exposed to JS for consumers.
-
----
+- **Type Specificity**: Use type-specific setters when possible for clarity and safety
+- **Property Naming**: Follow JavaScript naming conventions for object properties
+- **Function Scope**: Use internal args to maintain state across function calls
+- **Object Hierarchies**: Build complex objects by nesting objects and arrays
+- **Global Access**: Expose objects to JavaScript by setting them as properties of `c2wasm_window`
+- **Overwriting**: Be aware that setting a property overwrites any previous value
+- **Memory Management**: Create intermediate objects only when needed
 
 ## See Also
+
 - [Getting Object Properties](./getting_object_props.md)
+- [Getting Array Properties](./getting_array_props.md)
 - [Setting Array Properties](./setting_array_props.md)
-- [C2Wasm Examples Directory](../examples/)
-
----
-
-By following these patterns, you can robustly set and manage JS object properties from C using C2Wasm, enabling powerful WebAssembly applications with rich JS interop.
