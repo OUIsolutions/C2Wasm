@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="test.js"></script>
+    <script>
+        function main(){
+            print_object({
+                "name": "John Doe",
+                "age": 30,
+                "city": "New York"
+            });
+        }
+
+        let interval = setInterval(() => {
+            if(wasmExports){
+                clearInterval(interval);
+                main();
+            }
+        }, 10);
+    </script>
+</head>
+<body>
+   
+</body>
+</html>
