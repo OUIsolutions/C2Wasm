@@ -63,7 +63,7 @@ EM_JS(c2wasm_js_var,c2wasm_create_string,(const char *value),{
 EM_JS(c2wasm_js_var,c2wasm_create_function_with_internal_argsraw,(c2wasm_js_var internal_args, void *callback),{
     let internal_value = window.c2wasm_stack[internal_args];
     let index = window.c2wasm_get_stack_point();
-    window.c2wasm_stack[index] = window.c2wasm_create_js_c_interop_callback_with_internal_arg(internal_value,callback);
+    window.c2wasm_stack[index] =  window.c2wasm_create_js_c_interop_callback_with_internal_arg(callback,internal_value);
     return index;
 });
 
