@@ -28,6 +28,21 @@ EM_JS(long ,c2wasm_get_object_prop_long,(c2wasm_js_var stack_index, const char *
     return object[prop_name_formatted];
 });
 
+EM_JS(void *,c2wams_object_memcpy_string,(c2wasm_js_var stack_index, const char *prop_name, char *dest, int size), {
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    let value = object[prop_name_formatted];
+    for(let i = 0; i < size; i++){
+        if(i >= value.length){
+            break;
+        }
+        let current_char = value.charCodeAt(i);
+        wasmExports.c2wasm_set_char(dest,i,current_char);
+    }
+    return dest;
+});
+
+
 EM_JS(double ,c2wasm_get_object_prop_double,(c2wasm_js_var stack_index, const char *prop_name), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
