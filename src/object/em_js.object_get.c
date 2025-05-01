@@ -33,6 +33,14 @@ EM_JS(double ,c2wasm_get_object_prop_double,(c2wasm_js_var stack_index, const ch
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     return object[prop_name_formatted];
 });
+
+EM_JS(int ,c2wasm_get_object_prop_type,(c2wasm_js_var stack_index, const char *prop_name),{
+    let object = window.c2wasm_stack[stack_index];
+    let prop_name_formatted = window.c2wasm_get_string(prop_name);
+    let value = object[prop_name_formatted];
+    return window.c2wasm_get_type(value);
+})
+
 EM_JS(int ,c2wasm_get_object_prop_bool,(c2wasm_js_var stack_index, const char *prop_name),{
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
