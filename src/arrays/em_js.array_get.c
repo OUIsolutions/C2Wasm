@@ -66,6 +66,6 @@ EM_JS(int ,c2wasm_get_array_bool_by_index,(long stack_index, int index),{
         return 0;
     }
     return 1;
-})
+});
 
 
