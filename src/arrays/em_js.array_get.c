@@ -51,17 +51,3 @@ EM_JS(long ,c2wasm_get_array_any_by_index,(long stack_index, int index), {
     return created_index;
 });
 
-EM_JS(int,c2wasm_is_array_index_true,(long stack_index, int index),{
-    let array = window.c2wasm_stack[stack_index];
-    return array[index] == true;
-});
-
-EM_JS(int,c2wasm_is_array_index_undefined,(long stack_index, int index),{
-    let array = window.c2wasm_stack[stack_index];
-    return array[index] == undefined;
-});
-
-EM_JS(int,c2wasm_is_array_index_null,(long stack_index, int index),{
-    let array = window.c2wasm_stack[stack_index];
-    return array[index] == null;
-});
