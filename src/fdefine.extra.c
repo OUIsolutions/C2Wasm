@@ -14,9 +14,3 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
 }
 
 
-EMSCRIPTEN_KEEPALIVE void* c2wasm_memcpy(char *dest, const char *src, int size) {
-    for (int i = 0; i < size; i++) {
-        dest[i] = src[i];
-    }
-    return dest;
-}
