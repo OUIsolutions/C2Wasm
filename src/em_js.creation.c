@@ -19,37 +19,37 @@ $$    $$/ $$    $$/         $$    $$/ $$ |      $$       |$$    $$ |  $$  $$/ $$
                                                                                                       
 */
 
-EM_JS(long,c2wasm_create_long,(long value),{
+EM_JS(c2wasm_js_var,c2wasm_create_long,(long value),{
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = value;
     return index;
 });
 
-EM_JS(long,c2wasm_create_double,(double value),{
+EM_JS(c2wasm_js_var,c2wasm_create_double,(double value),{
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = value;
     return index;
 });
 
-EM_JS(long,c2wasm_create_object,(void),{
+EM_JS(c2wasm_js_var,c2wasm_create_object,(void),{
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = {};
     return index;
 });
 
-EM_JS(long,c2wasm_create_array,(void),{
+EM_JS(c2wasm_js_var,c2wasm_create_array,(void),{
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = [];
     return index;
 });
 
-EM_JS(long,c2wasm_create_string,(const char *value),{
+EM_JS(c2wasm_js_var,c2wasm_create_string,(const char *value),{
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = window.c2wasm_get_string(value);
     return index;
 });
 
-EM_JS(long,c2wasm_create_function_with_internal_argsraw,(c2wasm_js_var internal_args, void *callback),{
+EM_JS(c2wasm_js_var,c2wasm_create_function_with_internal_argsraw,(c2wasm_js_var internal_args, void *callback),{
     let internal_value = window.c2wasm_stack[internal_args];
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = window.c2wasm_create_js_c_interop_callback_with_internal_arg(internal_value,callback);
@@ -57,7 +57,7 @@ EM_JS(long,c2wasm_create_function_with_internal_argsraw,(c2wasm_js_var internal_
 });
 
 
-EM_JS(long,c2wasm_create_function_raw,(void *callback),{
+EM_JS(c2wasm_js_var,c2wasm_create_function_raw,(void *callback),{
     let index = window.c2wasm_get_stack_point();
     window.c2wasm_stack[index] = window.c2wasm_create_js_c_interop_callback(callback);
     return index;
