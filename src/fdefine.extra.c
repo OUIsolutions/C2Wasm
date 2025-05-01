@@ -12,5 +12,7 @@
 EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
     return str[index];
 }
-
+EMSCRIPTEN_KEEPALIVE void c2wasm_set_char(char *str,int index,char value) {
+    str[index] = value;
+}
 
