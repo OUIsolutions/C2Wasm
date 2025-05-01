@@ -39,6 +39,7 @@ c2wasm_js_var print_elements_of_array(){
 
 int main(){
   c2wasm_start();
+  c2wasm_set_object_prop_function(c2wasm_window,"print_elements_of_array",print_elements_of_array);
 
   return 0;
 }
