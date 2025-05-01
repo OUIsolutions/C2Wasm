@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Iteration Example</title>
+    <script src="test.js"></script>
+    <script>
+        function main(){
+            print_elements_of_array([
+                "foo",
+                42.0,
+                true,
+                undefined,
+                null
+            ]);
+        }
+
+        let interval = setInterval(() => {
+            if(wasmExports){
+                clearInterval(interval);
+                main();
+            }
+        }, 10);
+    </script>
+</head>
+<body>
+   <h1>Array Iteration Example</h1>
+   <p>Abra o console para ver os resultados da iteração do array.</p>
+</body>
+</html>
