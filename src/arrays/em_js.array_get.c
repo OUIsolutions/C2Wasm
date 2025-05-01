@@ -46,7 +46,6 @@ EM_JS(void* ,c2wasm_array_memcpy_string,(long stack_index, int index,int string_
         let current_char = value.charCodeAt(i+string_index);
         wasmExports.c2wasm_set_char(dest,i,current_char);
     }
-    console.log("=============\n");
 });
 
 
