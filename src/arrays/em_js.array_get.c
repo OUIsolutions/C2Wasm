@@ -35,6 +35,12 @@ EM_JS(double ,c2wasm_get_array_double_by_index,(long stack_index, int index,char
     return array[index];
 });
 
+EM_JS(int ,c2wasm_get_array_string_size_by_index,(long stack_index, int index), {
+    let array = window.c2wasm_stack[stack_index];
+    let value = array[index];
+    return value.length;
+});
+
 
 EM_JS(void* ,c2wasm_array_memcpy_string,(long stack_index, int index,int string_index, char *dest, int size), {
     let array = window.c2wasm_stack[stack_index];
