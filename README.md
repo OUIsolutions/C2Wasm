@@ -2,7 +2,7 @@
 
 # C2Wasm
 
-<img src="https://raw.githubusercontent.com/OUIsolutions/C2Wasm/main/.github/logo.png" alt="C2Wasm Logo" width="200"/>
+
 
 [![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](https://github.com/OUIsolutions/C2Wasm/releases/tag/0.3.0)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -22,9 +22,7 @@ With C2Wasm, you can:
 - Create and modify JavaScript objects
 - Leverage the full power of WebAssembly while writing familiar C code
 
-<div align="center">
-<img src="https://raw.githubusercontent.com/OUIsolutions/C2Wasm/main/.github/workflow.png" alt="C2Wasm Workflow" width="700"/>
-</div>
+
 
 ## 📋 Table of Contents
 
