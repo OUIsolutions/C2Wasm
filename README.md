@@ -8,4 +8,46 @@ make  frontend applications directly in  C
   if you prefer, here its a [quick install setup](https://github.com/mateusmoutinho/emscripten-easy-install)
 
 - 2 download [c2wasm](https://github.com/OUIsolutions/C2Wasm/releases/download/0.1.0/c2wasm.c) and save it in a folder 
-- 3 create a hello.c with a callback function, 
+- 3 create a hello.c with a callback function
+~~~c 
+#include "c2wasm.c"
+#include <stdio.h>
+
+long set_div_value(){
+
+  c2wasm_js_var find_args = c2wasm_create_array();
+  c2wasm_append_array_string(find_args,"test_div");
+  c2wasm_js_var element = c2wasm_call_object_prop(c2wasm_document,"getElementById",find_args);  
+  c2wasm_set_object_prop_string(element,"innerHTML","Hello World from C");
+  
+  return c2wasm_undefined;
+}
+
+
+int main(){
+  c2wasm_start();
+  c2wasm_set_object_prop_function(c2wasm_window,"set_div_value",set_div_value);
+}
+~~~
+you can compile it with 
+~~~bash
+emcc test.c -o test.js
+~~~
+
+now , create a html file to call our code
+~~~html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="test.js"></script>
+</head>
+<body>
+   <div id="test_div"> Old texto</div> 
+   <button onclick="set_div_value()">Set div value</button>
+</body>
+</html>
+~~~
+
