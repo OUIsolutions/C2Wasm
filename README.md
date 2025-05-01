@@ -62,6 +62,18 @@ Alternativly , if you dont have python , on your machine, you can use [yahr](htt
 ~~~bash
 yahr
 ~~~
+## Build From Scratch 
+if you want to make  [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.3.0/c2wasm.c) from scratch, you will need to have [darwin](https://github.com/OUIsolutions/Darwin) installed on version **0.2.1** , a quick setupt to install is:
+
+~~~bash
+curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.2.1/darwin.out -o darwin.out && sudo chmod +x darwin.out &&  sudo  mv darwin.out /usr/bin/darwin
+~~~
+than you can build the [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.3.0/c2wasm.c) with the command:
+
+~~~bash
+darwin run_blueprint 
+~~~
+
 
 ## Examples 
 | dir                                  | description                       |
