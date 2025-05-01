@@ -7,8 +7,8 @@ make  frontend applications directly in  C
 - 1 Install [ecmmscripten](https://github.com/emscripten-core/emsdk) 
   if you prefer, here its a [quick install setup](https://github.com/mateusmoutinho/emscripten-easy-install)
 
-- 2 download [c2wasm](https://github.com/OUIsolutions/C2Wasm/releases/download/0.1.0/c2wasm.c) and save it in a folder 
-- 3 create a **test.c** with a callback function
+- 2 download [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.1.0/c2wasm.c) and save it in a folder 
+- 3 create a **test.c** with a callback function, and save into the same dir you saved [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.1.0/c2wasm.c) 
 ~~~c 
 #include "c2wasm.c"
 #include <stdio.h>
@@ -29,12 +29,12 @@ int main(){
   c2wasm_set_object_prop_function(c2wasm_window,"set_div_value",set_div_value);
 }
 ~~~
-you can compile it with 
+- 4 Compile the test.c with: 
 ~~~bash
 emcc test.c -o test.js
 ~~~
 
-now , create a html file to call our code
+- 5 create a html file to call our code
 ~~~html
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +50,7 @@ now , create a html file to call our code
 </body>
 </html>
 ~~~
-now, you will need to setup a server , since web assembly requires a server to work.
+- 6 you will need to setup a server , since web assembly requires a server to work.
 if you have python on your machine you can start with:
 
 ~~~bash
