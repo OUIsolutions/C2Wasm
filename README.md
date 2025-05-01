@@ -50,4 +50,15 @@ now , create a html file to call our code
 </body>
 </html>
 ~~~
+now, you will need to setup a server , since web assembly requires a server to work.
+if you have python on your machine you can start with:
 
+~~~bash
+python3 -m http.server 8080
+~~~
+and if you navegate to **http://localhost:8080/teste.html** , you will se the nasm page.
+Alternativly , if you dont have python , on your machine, you can use [yahr](https://github.com/OUIsolutions/yahr), and start the server with:
+
+~~~bash
+yahr
+~~~
