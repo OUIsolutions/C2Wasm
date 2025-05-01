@@ -50,9 +50,7 @@ Alternatively, you can use our [quick install setup](https://github.com/mateusmo
 
 Download the latest version of [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.3.0/c2wasm.c) and save it in your project directory.
 
-<div align="center">
-<img src="https://raw.githubusercontent.com/OUIsolutions/C2Wasm/main/.github/installation.png" alt="Installation Process" width="600"/>
-</div>
+
 
 ## 🏁 Getting Started
 
