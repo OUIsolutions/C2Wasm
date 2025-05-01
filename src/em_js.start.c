@@ -136,4 +136,37 @@ EM_JS(void ,c2wasm_start, (void), {
             return return_value;
         };
     };
+    //check macro.types.h to see the types 
+    window.c2wasm_get_type = function(value){
+        if(value == undefined){
+            return 0;
+        }
+        if(value == null){
+            return 1;
+        }
+        if(value == true || value == false){
+            return 2;
+        }
+        if(typeof value == "number"){
+            return 3;
+        }
+        if(typeof value == "string"){
+            return 4;
+        }
+        //verify if its a array 
+        if(Array.isArray(value)){
+            return 6;
+        }
+        if(typeof value == "object"){
+            return 5;
+        }
+        if(typeof value == "function"){
+            return 7;
+        }
+        if(typeof value == "symbol"){
+            return 8;
+        }
+        if(typeof value == "bigint"){
+            return 9;
+        }
 });
