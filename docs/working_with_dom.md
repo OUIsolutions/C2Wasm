@@ -463,7 +463,7 @@ c2wasm_js_var counter_click_handler(c2wasm_js_var state) {
 }
 
 // Main initialization function
-c2wasm_js_var initialize() {
+void initialize() {
     // Create container
     c2wasm_js_var create_div_args = c2wasm_create_array();
     c2wasm_append_array_string(create_div_args, "div");
@@ -509,20 +509,17 @@ c2wasm_js_var initialize() {
     c2wasm_append_array_any(listener_args, handler);
     c2wasm_call_object_prop(button, "addEventListener", listener_args);
     
-    return c2wasm_undefined;
 }
 
 int main() {
     c2wasm_start();
     
     // Set up initialization function to run when DOM is ready
-    c2wasm_js_var init_func = c2wasm_create_function(initialize);
-    c2wasm_js_var domready_args = c2wasm_create_array();
-    c2wasm_append_array_string(domready_args, "DOMContentLoaded");
-    c2wasm_append_array_any(domready_args, init_func);
-    c2wasm_call_object_prop(c2wasm_document, "addEventListener", domready_args);
-    
+    initialize();
     return 0;
+
+
+
 }
 ```
 
