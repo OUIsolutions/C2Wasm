@@ -41,8 +41,12 @@ EM_JS(void *,c2wams_object_memcpy_string,(c2wasm_js_var stack_index, const char 
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let value = object[prop_name_formatted];
-    for(let i = start_string; i < value.length; i++){
-        wasmExports.c2wasm_set_char(dest,i,value.charCodeAt(i));
+    for(let i = 0; i < size; i++){
+        let current_char = value.charCodeAt(i+start_string);
+        if(isNaN(current_char)){
+            break;
+        }
+        wasmExports.c2wasm_set_char(dest,i,current_char);
     }
     return dest;
 });

@@ -45,8 +45,13 @@ EM_JS(int ,c2wasm_get_array_string_size_by_index,(long stack_index, int index), 
 EM_JS(void* ,c2wasm_array_memcpy_string,(long stack_index, int index,int string_index, char *dest, int size), {
     let array = window.c2wasm_stack[stack_index];
     let value = array[index];
-    for(let i = string_index; i < size; i++){
-            wasmExports.c2wasm_set_char(dest,i,value.charCodeAt(i+string_index));
+    for(let i = 0; i < size; i++){
+      
+        let current_char = value.charCodeAt(i+start_string);
+        if(isNaN(current_char)){
+            break;
+        }
+        wasmExports.c2wasm_set_char(dest,i,current_char);
     }
     return dest;
 });
