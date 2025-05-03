@@ -4,7 +4,7 @@
 
 
 
-[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](https://github.com/OUIsolutions/C2Wasm/releases/tag/0.3.0)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue.svg)](https://github.com/OUIsolutions/C2Wasm/releases/tag/0.4.0)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/OUIsolutions/C2Wasm?style=social)](https://github.com/OUIsolutions/C2Wasm/stargazers)
 
@@ -48,7 +48,7 @@ Alternatively, you can use our [quick install setup](https://github.com/mateusmo
 
 ### Step 2: Add C2Wasm to Your Project
 
-Download the latest version of [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.3.0/c2wasm.c) and save it in your project directory.
+Download the latest version of [c2wasm.c](https://github.com/OUIsolutions/C2Wasm/releases/download/0.4.0/c2wasm.c) and save it in your project directory.
 
 
 
