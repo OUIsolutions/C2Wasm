@@ -185,6 +185,7 @@ darwin run_blueprint
 | [Getting Object Properties](docs/getting_object_props.md) | How to retrieve properties from JavaScript objects |
 | [Getting Array Properties](docs/getting_array_props.md) | Methods for accessing JavaScript array elements |
 | [Working with DOM](docs/working_with_dom.md) | Techniques for DOM manipulation from C |
+| [AI Doc](aidoc.md) | Use this file if you need to make prompts that utilize this library |
 
 ## 💡 Examples
 
