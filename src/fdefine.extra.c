@@ -13,6 +13,9 @@ EMSCRIPTEN_KEEPALIVE char c2wasm_get_char(const char *str,int index) {
 EMSCRIPTEN_KEEPALIVE void c2wasm_set_char(char *str,int index,char value) {
     str[index] = value;
 }
+EMSCRIPTEN_KEEPALIVE int c2wasm_get_str_size(const char *str) {
+    return strlen(str);
+}
 
 
 EM_JS(void ,c2wasm_show_var_on_console,(long stack_index), {
