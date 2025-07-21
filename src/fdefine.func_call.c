@@ -1,7 +1,5 @@
 //silver_chain_scope_start
-//DONT MODIFY THIS COMMENT
-//this import is computationally generated
-//mannaged by SilverChain: https://github.com/OUIsolutions/SilverChain
+//mannaged by silver chain: https://github.com/OUIsolutions/SilverChain
 #include "imports/imports.em_js.h"
 //silver_chain_scope_end
 EMSCRIPTEN_KEEPALIVE long c2wasm_call_c_function_with_internal_args(c2wasm_js_var internal_args,void *callback){
