@@ -6,5 +6,5 @@
 #define c2wasm_window 5
 #define c2wasm_document 6
 #define c2wasm_body 7
-
+#define c2wasm_error 8
 typedef long c2wasm_js_var;

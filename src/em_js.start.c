@@ -41,6 +41,7 @@ EM_JS(void ,c2wasm_start, (void), {
     window.c2wasm_stack[5] = window;
     window.c2wasm_stack[6] = document;
     window.c2wasm_stack[7] = document.body;
+    window.c2wasm_stack[8] = Error;
 
 
  window.c2wasm_get_string = function(c_str ){
