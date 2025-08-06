@@ -107,7 +107,13 @@ EM_JS(c2wasm_js_var,c2wasm_call_object_prop,(c2wasm_js_var stack_index, const ch
     if(args != -1){
         arguments = window.c2wasm_stack[args];
     }
-    let result = object[prop_name_formatted](...arguments);
+    let result = null;
+    try{
+        result = object[prop_name_formatted](...arguments);
+    }catch(error){
+        result = error;
+    }
+
     if(result == false){
         return  window.c2wasm_false;
     }
