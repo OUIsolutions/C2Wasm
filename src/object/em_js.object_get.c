@@ -155,7 +155,7 @@ EM_ASYNC_JS(c2wasm_js_var,await_c2wasm_call_object_prop,(c2wasm_js_var stack_ind
     }
     let result = null;
     try{
-        result = object[prop_name_formatted](...arguments_callback);
+        result = await object[prop_name_formatted](...arguments_callback);
     }catch(error){
         result = error;
     }
