@@ -122,7 +122,7 @@ EM_JS(c2wasm_js_var, c2wasm_call_var, (c2wasm_js_var stack_index, c2wasm_js_var 
     return created_index;
 });
 
-#ifdef __ASYNCIFY__
+#ifdef C2WASM_ALLOW_ASYNC
 
 EM_ASYNC_JS(c2wasm_js_var, await_c2wasm_call_var, (c2wasm_js_var stack_index, c2wasm_js_var args), {
     let func = window.c2wasm_stack[stack_index];
@@ -160,6 +160,6 @@ EM_ASYNC_JS(c2wasm_js_var, await_c2wasm_call_var, (c2wasm_js_var stack_index, c2
     return created_index;
 });
 
-#endif // __ASYNCIFY__
+#endif // C2WASM_ALLOW_ASYNC
 
 

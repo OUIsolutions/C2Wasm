@@ -137,7 +137,7 @@ EM_JS(c2wasm_js_var,c2wasm_call_object_prop,(c2wasm_js_var stack_index, const ch
     return created_index;
 });
 
-#ifdef __ASYNCIFY__
+#ifdef C2WASM_ALLOW_ASYNC
 
 
 EM_ASYNC_JS(c2wasm_js_var,await_c2wasm_call_object_prop,(c2wasm_js_var stack_index, const char *prop_name,c2wasm_js_var args),{
@@ -176,4 +176,4 @@ EM_ASYNC_JS(c2wasm_js_var,await_c2wasm_call_object_prop,(c2wasm_js_var stack_ind
     window.c2wasm_stack[created_index] = result;
     return created_index;
 });
-#endif // __ASYNCIFY__
+#endif // C2WASM_ALLOW_ASYNC

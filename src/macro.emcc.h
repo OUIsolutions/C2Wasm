@@ -11,7 +11,7 @@
 #ifndef EM_JS
 #define EM_JS(ret, name, params, body) ret name params;
 #endif
-#ifdef __ASYNCIFY__
+#ifdef C2WASM_ALLOW_ASYNC
 
 #ifndef EM_ASYNC_JS
 #define EM_ASYNC_JS(ret, name, params, body) ret name params;
