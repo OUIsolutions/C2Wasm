@@ -59,6 +59,7 @@ Download the latest version of [c2wasm.c](https://github.com/OUIsolutions/C2Wasm
 Create a `test.c` file in the same directory where you saved `c2wasm.c`:
 
 ```c
+
 #include "c2wasm.c"
 #include <stdio.h>
 
@@ -69,7 +70,12 @@ long set_div_value() {
   
   // Get the DOM element with id "test_div"
   c2wasm_js_var element = c2wasm_call_object_prop(c2wasm_document, "getElementById", find_args);  
+  if(c2wasm_instance_of(element, c2wasm_error)) {
+    printf("Error: Element not found\n");
+    return c2wasm_undefined;
+  }
   
+
   // Set the innerHTML of the element
   c2wasm_set_object_prop_string(element, "innerHTML", "Hello World from C");
   
