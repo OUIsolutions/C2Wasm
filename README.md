@@ -173,13 +173,13 @@ If you want to build `c2wasm.c` from source, you'll need [Darwin](https://github
 ### Step 1: Install Darwin
 
 ```bash
-curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.2.1/darwin.out -o darwin.out && sudo chmod +x darwin.out && sudo mv darwin.out /usr/bin/darwin
+curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.18.4/darwin.out -o darwin.out && sudo chmod +x darwin.out && sudo mv darwin.out /usr/bin/darwin
 ```
 
 ### Step 2: Build C2Wasm
 
 ```bash
-darwin run_blueprint
+darwin run_blueprint --target all
 ```
 
 ## 📚 Documentation
