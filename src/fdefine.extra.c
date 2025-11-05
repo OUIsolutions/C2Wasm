@@ -22,7 +22,21 @@ EMSCRIPTEN_KEEPALIVE void c2wasm_set_char(char *str,int index,char value) {
 EMSCRIPTEN_KEEPALIVE int c2wasm_get_str_size(const char *str) {
     return private_emcc_strlen(str);
 }
-
+EMSCRIPTEN_KEEPALIVE void c2wasm_clear_all_except(const int *keep, int size) {
+    long size_stack = c2wasm_get_stack_size();
+    for(long i = 0; i < size_stack; i++) {
+        int should_keep = 0;
+        for(int j = 0; j < size; j++) {
+            if(keep[j] == i) {
+                should_keep = 1;
+                break;
+            }
+        }
+        if(!should_keep) {
+            c2wasm_free(i);
+        }
+    }
+}
 
 EM_JS(void ,c2wasm_show_var_on_console,(long stack_index), {
     let element = window.c2wasm_stack[stack_index];
