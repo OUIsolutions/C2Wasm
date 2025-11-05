@@ -67,7 +67,7 @@ EM_JS(int ,c2wasm_get_object_prop_bool,(c2wasm_js_var stack_index, const char *p
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let value = object[prop_name_formatted];
-    if(value == false){
+    if(value === false){
         return 0;
     }
 
@@ -80,16 +80,16 @@ EM_JS(c2wasm_js_var , c2wasm_get_object_prop_any,(c2wasm_js_var stack_index, con
 
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
     let value  = object[prop_name_formatted];
-    if(value == false){
+    if(value === false){
         return  window.c2wasm_false;
     }
-    if(value == true){
+    if(value === true){
         return window.c2wasm_true;
     }
-    if(value == null){
+    if(value === null){
         return window.c2wasm_null;
     }
-    if(value == undefined){
+    if(value === undefined){
         return window.c2wasm_undefined;
     }
 

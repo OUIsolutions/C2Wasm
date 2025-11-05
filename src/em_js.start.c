@@ -61,7 +61,7 @@ EM_JS(void ,c2wasm_start, (void), {
     
     window.c2wasm_get_stack_point = function(){
         for(let i= 8; i < window.c2wasm_stack.length; i++){
-            if (window.c2wasm_stack[i] == undefined){
+            if (window.c2wasm_stack[i] === undefined){
          
                 window.c2wasm_stack[i] = 0;
                 return i;
@@ -119,34 +119,34 @@ EM_JS(void ,c2wasm_start, (void), {
     };
     //check macro.types.h to see the types 
     window.c2wasm_get_type = function(value){
-        if(value == undefined){
+        if(value === undefined){
             return 0;
         };
-        if(value == null){
+        if(value === null){
             return 1;
         };
-        if(value == true || value == false){
+        if(value === true || value === false){
             return 2;
         };
-        if(typeof value == "number"){
+        if(typeof value === "number"){
             return 3;
         };
-        if(typeof value == "string"){
+        if(typeof value === "string"){
             return 4;
         };
         if(Array.isArray(value)){
             return 6;
         };
-        if(typeof value == "object"){
+        if(typeof value === "object"){
             return 5;
         };
-        if(typeof value == "function"){
+        if(typeof value === "function"){
             return 7;
         };
-        if(typeof value == "symbol"){
+        if(typeof value === "symbol"){
             return 8;
         }
-        if(typeof value == "bigint"){
+        if(typeof value === "bigint"){
             return 9;
         };
         return -1;

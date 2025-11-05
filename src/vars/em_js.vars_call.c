@@ -24,16 +24,16 @@ EM_JS(c2wasm_js_var, c2wasm_call_var, (c2wasm_js_var stack_index, c2wasm_js_var 
         result = error;
     }
 
-    if(result == false){
+    if(result === false){
         return window.c2wasm_false;
     }
-    if(result == true){
+    if(result === true){
         return window.c2wasm_true;
     }
-    if(result == null){
+    if(result === null){
         return window.c2wasm_null;
     }
-    if(result == undefined){
+    if(result === undefined){
         return window.c2wasm_undefined;
     }
     let created_index = window.c2wasm_get_stack_point();
@@ -62,16 +62,16 @@ EM_ASYNC_JS(c2wasm_js_var, await_c2wasm_call_var, (c2wasm_js_var stack_index, c2
         result = error;
     }
 
-    if(result == false){
+    if(result === false){
         return window.c2wasm_false;
     }
-    if(result == true){
+    if(result === true){
         return window.c2wasm_true;
     }
-    if(result == null){
+    if(result === null){
         return window.c2wasm_null;
     }
-    if(result == undefined){
+    if(result === undefined){
         return window.c2wasm_undefined;
     }
     let created_index = window.c2wasm_get_stack_point();
@@ -100,16 +100,16 @@ EM_JS(c2wasm_js_var, c2wasm_call_var_constructor, (c2wasm_js_var stack_index, c2
         result = error;
     }
 
-    if(result == false){
+    if(result === false){
         return window.c2wasm_false;
     }
-    if(result == true){
+    if(result === true){
         return window.c2wasm_true;
     }
-    if(result == null){
+    if(result === null){
         return window.c2wasm_null;
     }
-    if(result == undefined){
+    if(result === undefined){
         return window.c2wasm_undefined;
     }
     let created_index = window.c2wasm_get_stack_point();
@@ -138,16 +138,16 @@ EM_ASYNC_JS(c2wasm_js_var, await_c2wasm_call_var_constructor, (c2wasm_js_var sta
         result = error;
     }
 
-    if(result == false){
+    if(result === false){
         return window.c2wasm_false;
     }
-    if(result == true){
+    if(result === true){
         return window.c2wasm_true;
     }
-    if(result == null){
+    if(result === null){
         return window.c2wasm_null;
     }
-    if(result == undefined){
+    if(result === undefined){
         return window.c2wasm_undefined;
     }
     let created_index = window.c2wasm_get_stack_point();

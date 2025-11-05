@@ -42,7 +42,7 @@ EM_JS(void ,c2wasm_set_array_any_by_index,( c2wasm_js_var stack_index, int index
 
 EM_JS(void ,c2wasm_set_array_bool_by_index,(    c2wasm_js_var stack_index, int index, int value), {
     let array = window.c2wasm_stack[stack_index];
-    if (value == 0){
+    if (value === 0){
         array[index] = false;
     }
     if (value > 0){

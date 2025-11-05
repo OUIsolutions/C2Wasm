@@ -46,7 +46,7 @@ EM_JS(void ,c2wasm_set_object_prop_string,(long stack_index, const char *prop_na
 EM_JS(void ,c2wasm_set_object_prop_bool,(c2wasm_js_var stack_index, const char *prop_name, int value), {
     let object = window.c2wasm_stack[stack_index];
     let prop_name_formatted = window.c2wasm_get_string(prop_name);
-    if (value == 0){
+    if (value === 0){
         object[prop_name_formatted] = false;
     }
     if (value > 0){

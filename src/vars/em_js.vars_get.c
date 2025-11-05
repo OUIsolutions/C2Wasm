@@ -59,7 +59,7 @@ EM_JS(int, c2wasm_instance_of, (c2wasm_js_var stack_index,c2wasm_js_var target),
 
 EM_JS(int, c2wasm_get_var_bool, (c2wasm_js_var stack_index), {
     let value = window.c2wasm_stack[stack_index];
-    if(value == false){
+    if(value === false){
         return 0;
     }
     return 1;
@@ -68,16 +68,16 @@ EM_JS(int, c2wasm_get_var_bool, (c2wasm_js_var stack_index), {
 EM_JS(c2wasm_js_var, c2wasm_get_var_any, (c2wasm_js_var stack_index), {
     let value = window.c2wasm_stack[stack_index];
     
-    if(value == false){
+    if(value === false){
         return window.c2wasm_false;
     }
-    if(value == true){
+    if(value === true){
         return window.c2wasm_true;
     }
-    if(value == null){
+    if(value === null){
         return window.c2wasm_null;
     }
-    if(value == undefined){
+    if(value === undefined){
         return window.c2wasm_undefined;
     }
 

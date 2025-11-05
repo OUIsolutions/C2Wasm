@@ -19,7 +19,7 @@ $$    $$/ $$    $$/         $$    $$/ $$ |      $$       |$$    $$ |  $$  $$/ $$
 
 EM_JS(c2wasm_js_var,c2wasm_create_bool,(int value),{
     let index = window.c2wasm_get_stack_point();
-    if (value == 0){
+    if (value === 0){
         window.c2wasm_stack[index] = false;
     }
     if (value > 0){
