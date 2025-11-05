@@ -78,8 +78,7 @@ EM_JS(void ,c2wasm_start, (void), {
             let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
   
-            let current_local_stack = [];
-            
+    
 
 
             let new_interal_args_index = window.c2wasm_get_stack_point();
@@ -88,11 +87,7 @@ EM_JS(void ,c2wasm_start, (void), {
             let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(new_interal_args_index,callback);
             let return_value = window.c2wasm_stack[return_index];
             
-            for(let i = 0; i < current_local_stack.length; i++){
-              let item_to_remove_from_stack = current_local_stack[i];
-              delete window.c2wasm_stack[item_to_remove_from_stack];
-            }
-           
+         
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
 
             if (return_value instanceof Error){
