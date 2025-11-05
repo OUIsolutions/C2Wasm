@@ -62,18 +62,14 @@ EM_JS(void ,c2wasm_start, (void), {
     window.c2wasm_get_stack_point = function(){
         for(let i= 8; i < window.c2wasm_stack.length; i++){
             if (window.c2wasm_stack[i] == undefined){
-                if(window.c2wasm_local_stack){
-                    window.c2wasm_local_stack.push(i);
-                }
+         
                 window.c2wasm_stack[i] = 0;
                 return i;
             }
         }
         window.c2wasm_stack.push(0);
         let created_index = window.c2wasm_stack.length - 1;
-        if(window.c2wasm_local_stack){
-            window.c2wasm_local_stack.push(created_index);
-        }
+
         return created_index;
     };
     window.c2wasm_create_js_c_interop_callback_with_internal_arg = function(callback,internal_value){
@@ -82,9 +78,7 @@ EM_JS(void ,c2wasm_start, (void), {
             let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
   
-            let old_local_stack = window.c2wasm_local_stack;
             let current_local_stack = [];
-            window.c2wasm_local_stack = current_local_stack;
             
 
 
@@ -100,7 +94,6 @@ EM_JS(void ,c2wasm_start, (void), {
             }
            
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
-            window.c2wasm_local_stack = old_local_stack;
 
             if (return_value instanceof Error){
                 throw return_value;
@@ -115,20 +108,13 @@ EM_JS(void ,c2wasm_start, (void), {
             let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
   
-            let old_local_stack = window.c2wasm_local_stack;
-            let current_local_stack = [];
-            window.c2wasm_local_stack = current_local_stack;
-        
+           
             let return_index = wasmExports.c2wasm_call_c_function(callback);
             let return_value = window.c2wasm_stack[return_index];
             
-            for(let i = 0; i < current_local_stack.length; i++){
-              let item_to_remove_from_stack = current_local_stack[i];
-              delete window.c2wasm_stack[item_to_remove_from_stack];
-            }
+        
            
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
-            window.c2wasm_local_stack = old_local_stack;
 
             if( return_value instanceof Error){
                 throw return_value;
