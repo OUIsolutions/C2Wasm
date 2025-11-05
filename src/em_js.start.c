@@ -73,26 +73,37 @@ EM_JS(void ,c2wasm_start, (void), {
         return created_index;
     };
     window.c2wasm_create_js_c_interop_callback_with_internal_arg = function(callback,internal_value){
-        return function(){
+        return async function(){
             let ARGUMENTS_STACK_INDEX = 4;
             let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
   
-            let current_local_stack = [];
-            
-
-
             let new_interal_args_index = window.c2wasm_get_stack_point();
             window.c2wasm_stack[new_interal_args_index] = internal_value;
             
-            let return_index = wasmExports.c2wasm_call_c_function_with_internal_args(new_interal_args_index,callback);
+            wasmExports.c2wasm_call_c_function_with_internal_args(new_interal_args_index,callback);
+            let return_index = wasmExports.c2wasm_get_main_callback_result();
+            console.log("return_index before", return_index);
+            
+            if (return_index == -1) {
+                return_index = await new Promise((resolve) => {
+                    let interval = setInterval(function(){
+                        let index = wasmExports.c2wasm_get_main_callback_result();
+                        if (index != -1){
+                            console.log("got return_index:", index);
+                            clearInterval(interval);
+                            resolve(index);
+                        }
+                        else{
+                            console.log("still waiting for return_index");
+                        }
+                    }, 100);
+                });
+            }
+            
+            console.log("return_index after:", return_index);
             let return_value = window.c2wasm_stack[return_index];
             
-            for(let i = 0; i < current_local_stack.length; i++){
-              let item_to_remove_from_stack = current_local_stack[i];
-              delete window.c2wasm_stack[item_to_remove_from_stack];
-            }
-           
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = old_arguments;
 
             if (return_value instanceof Error){
@@ -108,7 +119,6 @@ EM_JS(void ,c2wasm_start, (void), {
             let old_arguments = window.c2wasm_stack[ARGUMENTS_STACK_INDEX];
             window.c2wasm_stack[ARGUMENTS_STACK_INDEX] = arguments;
   
-           
             let return_index = wasmExports.c2wasm_call_c_function(callback);
             let return_value = window.c2wasm_stack[return_index];
             
