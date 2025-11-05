@@ -59,16 +59,16 @@ EM_JS(c2wasm_js_var ,c2wasm_get_array_any_by_index,(long stack_index, int index)
     let array = window.c2wasm_stack[stack_index];
 
     let value = array[index];
-    if(value == false){
+    if(value === false){
         return  window.c2wasm_false;
     }
-    if(value == true){
+    if(value === true){
         return window.c2wasm_true;
     }
-    if(value == null){
+    if(value === null){
         return window.c2wasm_null;
     }
-    if(value == undefined){
+    if(value === undefined){
         return window.c2wasm_undefined;
     }
     let created_index = window.c2wasm_get_stack_point();
